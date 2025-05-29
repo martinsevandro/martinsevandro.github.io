@@ -1,0 +1,63 @@
+---
+layout: layout.njk
+title: "Evandro Martins"
+---
+
+<div class="container">
+  <section class="perfil">
+    <img src="/assets/imgs/perfil-ef.png" alt="Foto de perfil" class="perfil-image"/>
+    <h2 class="my-name">Evandro Martins</h2> 
+
+    <ul class="perfil-description"> 
+      <a href="" class="github">github</a>
+      <a href="" class="linkeidn">linkedIn</a> 
+      <a href="" class="email">email</a>
+    </ul>
+
+    <a href="" class="perfil-resume">RESUME</a>
+
+    <span class="perfil-footer">© 2025</span>
+      
+  </section>
+
+  <section class="posts">
+    <input type="text" id="searchInput" placeholder="Buscar posts..." />
+    <h1 class="title-Main"></h1> 
+    
+    <ul>
+      {% for post in collections.post | reverse %}
+        <li class="post-item">
+          <div class="post-title">
+            <a href="{{ post.url }}">{{ post.data.title }}</a>
+          </div>
+
+          <div class="post-details">
+            <div class="post-date">          
+              <small>{{ post.date | date("dd/MM/yyyy") }}</small>
+            </div>
+
+            <div class="post-tags">
+              {% for tag in post.data.tags %}
+               <span class="tag">{{ tag }}</span>
+              {% endfor %}
+            </div> 
+          </div>
+        </li>
+      {% endfor %}
+    </ul>
+  </section>
+</main>
+
+<script>
+  const searchInput = document.getElementById("searchInput");
+  const postItems = document.querySelectorAll(".post-item");
+
+  searchInput.addEventListener("input", () => {
+    const query = searchInput.value.toLowerCase();
+
+    postItems.forEach(item => {
+      const text = item.textContent.toLowerCase();
+      item.style.display = text.includes(query) ? "block" : "none";
+    });
+  });
+</script>
