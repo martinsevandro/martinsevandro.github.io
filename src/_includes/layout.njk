@@ -7,18 +7,26 @@
         <link rel="stylesheet" href="/assets/styles.css" />
         <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism-tomorrow.css" />
     </head>
 
-    <body>
-        <header>
-        </header>
+    <body class="{{ pageType}}">
+        <header></header>
 
-        <main>
-            {{ content | safe }}
-            
-        </main>
+        <main class="{% if pageType == "home" %}main-home{% elif pageType == "post" %}main-post{% elif pageType == "resume" %}main-resume{% else %}main-home{% endif %}">
+            <div class="container">
+
+                {% include "partials/perfil.njk" %}
+
+                {{ content | safe }}
+
+            </div>
+        </main>       
 
         <footer>            
         </footer>
+        <script src="https://cdn.jsdelivr.net/npm/prismjs/prism.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-javascript.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-python.min.js"></script>
     </body>
 </html>

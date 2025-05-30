@@ -39,13 +39,22 @@ main {
 }
 
 .perfil-description{
-    margin: 0 auto;
-    text-align: center;
+    display: flex;
+    gap: 0.5rem;
+    padding: 0;
+    list-style: none;
+    justify-content: center;
+}
+
+.perfil-description img {
+    width: 2rem;
+    height: 2rem;
 }
 
 .perfil-resume {
     background-color: #bfc0d1;
     color: #3A3E6C !important; 
+    margin-top: 2rem;
     padding: 1rem;
     border-radius: 0.5rem;
 }
@@ -55,6 +64,7 @@ main {
     color: #bfc0d1; 
 } 
 
+/* pagina principal */
 .posts{
     display: grid;
     grid-template-columns: auto;
@@ -66,7 +76,8 @@ main {
     box-sizing: border-box; 
 }
 
-#searchInput{              
+#searchInput{
+    font-family: "Inter", sans-serif;
     font-size: 2rem;
     line-height: normal;               
     letter-spacing: 0;
@@ -81,19 +92,9 @@ main {
     border-bottom: #bfc0d1 1px solid;
 }
 
-.post-item {
-    display: grid;
-    grid-template-columns: 3fr 7fr;
-    grid-template-rows: auto;
-    gap: 0.5rem;
-    padding: 0 1rem 2rem 0;
-    margin: 0 0 1rem 0;  
-}
-
 ul {
-    list-style: none;
-    padding: 2rem 0;
-    margin: 0 0 1rem 2rem;
+    margin: 0;
+    padding: 0;
 }
 
 li {
@@ -101,26 +102,37 @@ li {
     padding: 0;
 }
 
+.post-item {
+    display: flex;
+    flex-direction: column;
+    width: 100%; 
+    padding: 2rem;
+    box-sizing: border-box;  
+}
+
 .post-title {
-    grid-column: 1 / -1;
     font-size: 2rem;
-    font-weight: bold; 
-    letter-spacing: 0;  
+    font-weight: bold;
+    letter-spacing: 0; 
 }
 
 .post-details {
-    display: contents;
+    display: flex;
+    flex-wrap: wrap; 
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem 1rem;
 }
 
 .post-date {
-    grid-column: 1;
+    flex: 0 0 auto;  
+    margin-right: 1rem;
 }
 
-.post-tags{ 
-    grid-column: 2;
+.post-tags{  
     display: flex;
-    justify-content: flex-end;
-    gap: 1rem;
+    flex-wrap: wrap;
+    gap: 0.5rem;
 }
 
 .tag {
@@ -131,17 +143,55 @@ li {
     font-size: 1rem;
 }
 
+
 a, a:visited, a:hover, a:active {
     color: inherit;        
     text-decoration: none; 
 }
 
-h1 {              
-    font-size: 2.5rem;                   
+/* publication: estrutura do conteúdo de cada post */
+.publication {
+    display: flex;
+    flex-direction: column;
+    width: 100%; 
+    margin: 80px 0 0 280px;
+    padding: 2rem;
+    box-sizing: border-box;
+
+}
+
+.publication-title {
+    font-size: 2rem;
+    font-weight: bold;
+    letter-spacing: 0;
+}
+
+.publication-title h1 {
+    font-size: 2rem;
     line-height: normal;               
     letter-spacing: 0;                 
-    margin: 0;    
+    margin: 0;      
 }
+
+.publication-details{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem 1rem;
+}
+
+.publication-date{
+    flex: 0 0 auto;  
+    margin-right: 1rem;
+}
+
+.publication-tags{ 
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
  
 
 @media (max-width: 760px) {
@@ -178,17 +228,62 @@ h1 {
     }
 
     ul { 
-        margin: 0;
-        padding: 0;
+        margin: 0; 
     } 
   
-    .post-item {
-        grid-template-columns: 1fr;
-        padding-left: 0;
+    .post-item {        
+        max-width: 100%; 
+        margin: 0;
+        padding: 1rem 0;
+        box-sizing: border-box;
+    }
+
+    .post-title {
+        font-size: 2rem;
+        font-weight: bold;
+        letter-spacing: 0;
+    }
+
+    .post-details {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        gap: 0.5rem 1rem;
+        width: 100%; 
+        padding-top: 0.5rem;
+    }
+
+    .post-date {
+        flex: 0 0 auto;  
+        margin-right: 1rem;
     }
 
     .post-tags {
-        grid-column: 1;
-        justify-content: flex-start;
+        flex: 1;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+    .publication {  
+        max-width: 100%;
+        width: calc(100% - 40px);
+        margin: 0 auto;
+        padding: 1rem 0;
+        box-sizing: border-box;
+    }
+
+    .publication-title {
+        font-size: 2rem;
+        font-weight: bold;
+        letter-spacing: 0;
+    }
+
+    .publication-tags p {
+        margin: 0.2rem 0; 
+    }
+
+    .content-publication {
+        margin-top: 1rem;
     }
 }
