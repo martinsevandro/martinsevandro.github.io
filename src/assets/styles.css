@@ -1,44 +1,80 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
 html, body {
-    font-family: "Inter", sans-serif;
-    background-color: #3A3E6C; 
-    color: #bfc0d1; 
-    font-weight: 400;
     margin: 0;
     padding: 0;
     height: 100%;
+    font-family: "Open Sans", "Inter", sans-serif;
+    font-weight: 400;
+    background-color: #121524;
+    color: #bfc0d1;
     overflow-x: hidden;
+}
+ 
+img, pre, code, .skill, .tag {
+    max-width: 100%;
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+ 
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 main {
-    margin: auto;
+    margin: 0;
     padding: 0;
-    max-width: 1400px;
-
 }
-
+ 
 .container {
     display: flex;
-    position: relative;
+    flex-direction: row;
+    gap: 2rem;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 2rem;
+    height: 100vh;
+    overflow: hidden;
+    box-sizing: border-box;
 }
-
+ 
 .perfil {
-    position: fixed;
-    max-width: 280px;
+    flex: 0 0 20%;
+    max-width: 20%;
+    height: 100vh;
+    position: sticky;
+    top: 2rem;
+    align-self: flex-start;
+
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 0 64px 0 4rem;
-    height: 100vh; 
 }
-
+ 
+.main-home .posts,
+.main-post .publication,
+.main-curriculum .resume {
+    flex: 1;
+    width: 80%;
+    box-sizing: border-box;
+    overflow-y: auto;
+}
+ 
 .perfil-image {
     width: 12rem;
     height: 12rem;
     border-radius: 50%;
 }
 
-.perfil-description{
+.perfil-description {
     display: flex;
     gap: 0.5rem;
     padding: 0;
@@ -49,55 +85,62 @@ main {
 .perfil-description img {
     width: 2rem;
     height: 2rem;
+    transition: 0.3s ease-in-out;
+}
+
+.perfil-description img:hover {
+    opacity: 0.5;
 }
 
 .perfil-resume {
     background-color: #bfc0d1;
-    color: #3A3E6C !important; 
+    color: #121524 !important;
     margin-top: 2rem;
     padding: 1rem;
     border-radius: 0.5rem;
+    border: 1px solid #bfc0d1;
+    transition: 0.3s ease-in-out;
+}
+
+.perfil-resume:hover {
+    background-color: #121524;
+    color: #bfc0d1 !important;
+    border: 1px solid #bfc0d1;
+    opacity: 0.5;
 }
 
 .perfil-footer {
     margin-top: 2rem;
-    color: #bfc0d1; 
-} 
-
-/* pagina principal */
-.posts{
-    display: grid;
-    grid-template-columns: auto;
-    grid-template-rows: 0.1fr 0.9fr;
-    width: 100%;
-    max-width: calc(100% - 280px);
-    margin: 80px 0 0 280px;
-    padding: 2rem;
-    box-sizing: border-box; 
+    color: #bfc0d1;
 }
 
-#searchInput{
-    font-family: "Inter", sans-serif;
+.posts {
+    width: 100%;
+    margin: 0;
+    padding: 2rem 2rem 0 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    box-sizing: border-box;
+}
+
+#searchInput {
+    font-family: "Open Sans", "Inter", sans-serif;
     font-size: 2rem;
-    line-height: normal;               
+    line-height: normal;
     letter-spacing: 0;
     padding: 0;
-    margin: 0 0 0 2rem;
-    color: #3A3E6C; 
+    margin-left: 2rem;
+    color: #121524;
 }
 
 .title-Main {
-    padding: 0;
     margin: 1rem 0 0 2rem;
-    border-bottom: #bfc0d1 1px solid;
-}
-
-ul {
-    margin: 0;
     padding: 0;
+    border-bottom: 1px solid #bfc0d1;
 }
 
-li {
+ul, li {
     margin: 0;
     padding: 0;
 }
@@ -105,31 +148,37 @@ li {
 .post-item {
     display: flex;
     flex-direction: column;
-    width: 100%; 
+    width: 100%;
     padding: 2rem;
-    box-sizing: border-box;  
+    box-sizing: border-box;
+    background-color: #121524;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.post-item:hover {
+    opacity: 0.5;
 }
 
 .post-title {
     font-size: 2rem;
     font-weight: bold;
-    letter-spacing: 0; 
+    letter-spacing: 0;
 }
 
 .post-details {
     display: flex;
-    flex-wrap: wrap; 
+    flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
     gap: 0.5rem 1rem;
 }
 
 .post-date {
-    flex: 0 0 auto;  
+    flex: 0 0 auto;
     margin-right: 1rem;
 }
 
-.post-tags{  
+.post-tags {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
@@ -137,88 +186,193 @@ li {
 
 .tag {
     background-color: #bfc0d1;
-    color: #3A3E6C;
+    color: #121524;
     padding: 0.2rem 0.5rem;
     border-radius: 0.2rem;
     font-size: 1rem;
+    width: fit-content;
 }
-
 
 a, a:visited, a:hover, a:active {
-    color: inherit;        
-    text-decoration: none; 
+    color: inherit;
+    text-decoration: none;
 }
 
-/* publication: estrutura do conteúdo de cada post */
-.publication {
+.publication, .resume {
     display: flex;
     flex-direction: column;
-    width: 100%; 
-    margin: 80px 0 0 280px;
-    padding: 2rem;
+    width: 100%;
+    margin: 0;
+    padding: 1rem 4rem;
     box-sizing: border-box;
-
 }
 
-.publication-title {
+.publication-title, .resume-title {
     font-size: 2rem;
     font-weight: bold;
     letter-spacing: 0;
+    margin: 0;
 }
 
-.publication-title h1 {
+.publication-title h1,
+.resume-title h1 {
     font-size: 2rem;
-    line-height: normal;               
-    letter-spacing: 0;                 
-    margin: 0;      
+    line-height: normal;
+    letter-spacing: 0;
+    margin: 0;
 }
 
-.publication-details{
+.publication-details, .publication-tags,
+.resume-contact, .resume-categories,
+.skills-list {
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
     gap: 0.5rem 1rem;
 }
 
-.publication-date{
-    flex: 0 0 auto;  
+.publication-details {
+    align-items: center;
+    justify-content: space-between;
+}
+
+.publication-date {
+    flex: 0 0 auto;
     margin-right: 1rem;
 }
 
-.publication-tags{ 
-    display: flex;
-    flex-wrap: wrap;
+.publication-tags {
     gap: 0.5rem;
 }
 
- 
+.resume-contact {
+    gap: 1rem;
+    margin-bottom: 1rem;
+    border-bottom: 1px solid #bfc0d1;
+    word-break: break-word;
+}
+
+.resume-contact a {
+    white-space: nowrap;
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+.resume-categories {
+    flex-direction: row;  
+    gap: 1rem;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+.esq-categories {
+    flex-basis: 55%;
+    box-sizing: border-box;
+}
+
+.dir-categories {
+    flex-basis: 40%;
+    box-sizing: border-box;
+}
+
+.resume-skills {
+    display: flex;
+    flex-direction: column;
+}
+
+.skills-list {
+    padding: 0;
+    list-style: none;
+    margin: 0;
+    max-width: 100%;
+    overflow-wrap: break-word;
+}
+
+.skill {
+    min-width: 0;
+    max-width: 100%;
+    padding: 0.2rem 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 0.2rem;
+    background-color: #bfc0d1;
+    color: #121524;
+    font-size: 1rem;
+    white-space: normal;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    box-sizing: border-box;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.skill:hover {
+    opacity: 0.5;
+}
+
+.resume-languages .language {
+    font-weight: bold;
+}
+
+* {
+    box-sizing: border-box;
+}
 
 @media (max-width: 760px) {
-    main{
+    main {
         margin: 0;
         padding: 0;
+        width: 100%;
         max-width: 100%;
     }
+
     .container {
         flex-direction: column;
+        width: 100%;
+        max-width: 100%;
+        height: auto;    
+        padding: 1rem;       
+        margin: 0 auto;
+        overflow-y: auto;    
+        overflow-x: hidden;  
+        gap: 1rem;           
+        box-sizing: border-box;
     }
 
     .perfil {
-        position: relative; 
-        margin: auto;
+        position: relative;
+        margin: 0 auto;
+        width: 100%;
+        max-width: 100%;
         height: auto;
-        padding: 2rem 1rem; 
+        padding: 1rem 1rem;
         gap: 1rem;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        
+    }
+
+    .main-home .posts,
+    .main-post .publication,
+    .main-curriculum .resume {
+        flex: 1;
+        width: 100%;
+        box-sizing: border-box;
+        overflow-y: auto;
     }
 
     .posts {  
+        width: 100%;
         max-width: 100%;
-        width: calc(100% - 40px);
-        margin: 0 auto;
+        margin: 0;
         padding: 1rem 0;
         box-sizing: border-box;
- 
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        overflow-y: auto;
+        height: auto;
+        flex-grow: 1;
     }
 
     #searchInput, .title-Main { 
@@ -229,33 +383,42 @@ a, a:visited, a:hover, a:active {
 
     ul { 
         margin: 0; 
+        padding: 0;
+        width: 100%;
     } 
-  
+
     .post-item {        
+        width: 100%;
         max-width: 100%; 
         margin: 0;
         padding: 1rem 0;
         box-sizing: border-box;
+        background-color: #121524;
     }
 
     .post-title {
         font-size: 2rem;
         font-weight: bold;
         letter-spacing: 0;
+        width: 100%;
     }
 
     .post-details {
         display: flex;
         flex-wrap: wrap;
         align-items: flex-start;
+        justify-content: space-between;
         gap: 0.5rem 1rem;
         width: 100%; 
         padding-top: 0.5rem;
+        box-sizing: border-box;
     }
 
     .post-date {
         flex: 0 0 auto;  
         margin-right: 1rem;
+        white-space: nowrap;
+        flex-shrink: 0;
     }
 
     .post-tags {
@@ -263,20 +426,53 @@ a, a:visited, a:hover, a:active {
         display: flex;
         flex-wrap: wrap;
         gap: 0.5rem;
+        justify-content: flex-end;
+        max-width: 70%;
+        flex-grow: 1; 
     }
-
+ 
     .publication {  
+        width: 100%;
         max-width: 100%;
-        width: calc(100% - 40px);
-        margin: 0 auto;
+        margin: 0;
         padding: 1rem 0;
         box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
     }
 
     .publication-title {
         font-size: 2rem;
         font-weight: bold;
         letter-spacing: 0;
+        width: 100%;
+    }
+
+    .publication-title h1 {
+        font-size: 2rem;
+        line-height: normal;               
+        letter-spacing: 0;                 
+        margin: 0;
+        width: 100%;
+    }
+
+    .publication-details {
+        display: flex; 
+        gap: 0.5rem;
+        align-items: flex-start;
+        justify-content: space-between;
+        width: 100%;
+        flex-wrap: wrap;
+    } 
+
+    .publication-tags {
+
+    }
+
+    .publication-date {
+        margin-right: 0;
+        flex: 0 0 auto;
     }
 
     .publication-tags p {
@@ -285,5 +481,115 @@ a, a:visited, a:hover, a:active {
 
     .content-publication {
         margin-top: 1rem;
+        width: 100%;
+    }
+
+    .resume {
+        width: 100%;
+        max-width: 100%;
+        margin: 0;
+        padding: 1rem 0rem;
+        box-sizing: border-box;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        overflow-x: hidden;
+    }
+
+    .resume-title {
+        font-size: 2rem;
+        font-weight: bold;
+        letter-spacing: 0;
+        width: 100%;
+    }
+
+    .resume-title h1 {
+        font-size: 2rem;
+        line-height: normal;               
+        letter-spacing: 0;                 
+        margin: 0;
+        width: 100%;
+    }
+
+    .resume-contact {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        margin: 0 0 1rem 0; 
+        border-bottom: #bfc0d1 0px solid; 
+        word-break: break-word;
+        width: 100%;
+    } 
+
+    .resume-contact a {
+        white-space: normal;
+        overflow-wrap: break-word;
+        word-break: break-word;
+    }
+
+    .resume-categories {
+        flex-direction: column;
+        gap: 0.5rem;
+        width: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+    }
+
+    .esq-categories,
+    .dir-categories {
+        flex-basis: 100%;
+        max-width: 100%;
+        box-sizing: border-box;
+        width: 100%;
+    }
+
+    .resume-skills {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .skills-list {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        padding: 0;
+        margin: 0;                  
+        max-width: 100%;          
+        overflow-wrap: break-word;
+        width: 100%;
+    }
+
+    .skill { 
+        white-space: normal;   
+        word-break: break-word;    
+        min-width: 0;              
+        max-width: 100%;          
+        padding: 0.2rem 0.5rem;
+        border: 1px solid #ccc;
+        border-radius: 0.2rem;
+        box-sizing: border-box;
+        background-color: #bfc0d1;
+        color: #121524;
+        font-size: 1rem;
+        width: auto;
+    }
+
+    .skill:hover {
+        opacity: 0.5;
+        transition: .3s ease-in-out;
+    }
+
+    .resume-summary, 
+    .resume-education, 
+    .resume-projects, 
+    .resume-experience, 
+    .resume-skills, 
+    .resume-interests,
+    .resume-languages {
+        padding: 1rem 0;
+        border-top: 1px solid #bfc0d1;
+    }
+
+    .resume-languages .language {
+        font-weight: bold;
     }
 }
