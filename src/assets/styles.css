@@ -93,6 +93,7 @@ main {
 }
 
 .perfil-resume {
+    font-size: large;
     background-color: #bfc0d1;
     color: #121524 !important;
     margin-top: 2rem;
@@ -262,7 +263,40 @@ a, a:visited, a:hover, a:active {
     gap: 1rem;
     width: 100%;
     max-width: 100%;
-    box-sizing: border-box;
+    box-sizing: border-box; 
+}
+
+.resume-categories h2 { 
+    font-size: 1.5rem;
+    margin: 0; 
+    padding-bottom: 0.5rem;
+}
+
+.resume-categories h3 {
+    font-size: 1.1rem;  
+    margin: 0;
+}
+
+.resume-categories p {
+    font-size: 0.95rem; 
+    margin: 0.2rem 0 0.8rem;
+}
+
+.resume-categories p small {
+    font-size: 0.85rem;
+    font-style: italic;
+}
+
+.resume-categories section {
+    border: #bfc0d1 1px solid;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+
+.resume-categories article { 
+    margin-bottom: 2rem;
+    padding: 0 0 0 1rem;
 }
 
 .esq-categories {
@@ -275,9 +309,34 @@ a, a:visited, a:hover, a:active {
     box-sizing: border-box;
 }
 
+
+/* .resume-education article, .resume-projects article, .resume-experience article, .resume-skills article, .resume-interests article, .resume-languages article {
+    margin-bottom: 1rem; 
+    padding: 0 0 0 1rem;
+} */
+
+.resume-experience-list{
+    margin: 0 0 0 1rem;
+}
+
+.resume-education h3, .resume-projects h3, .resume-experience h3, .resume-skills h3 {
+    margin: 0;
+}
+
+.resume-education p, .resume-projects p, .resume-experience p, .resume-skills p {
+    margin: 0.2rem 0 0 0;
+}
+
+
 .resume-skills {
     display: flex;
     flex-direction: column;
+}
+
+
+
+.resume-skills h3 {
+    padding: 0.5rem 0;
 }
 
 .skills-list {
@@ -578,14 +637,8 @@ a, a:visited, a:hover, a:active {
         transition: .3s ease-in-out;
     }
 
-    .resume-summary, 
-    .resume-education, 
-    .resume-projects, 
-    .resume-experience, 
-    .resume-skills, 
-    .resume-interests,
-    .resume-languages {
-        padding: 1rem 0;
+    .resume-summary {
+        /* padding: 1rem 0; */
         border-top: 1px solid #bfc0d1;
     }
 
