@@ -22,7 +22,9 @@
 
                 {% include "partials/perfil.njk" %}
 
-                {{ content | safe }}
+                {% block content %}
+                    {{ content | safe }}
+                {% endblock %}
 
             </div>
         </main>       

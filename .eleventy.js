@@ -13,7 +13,6 @@ module.exports = function (eleventyConfig) {
     return collectionApi.getFilteredByGlob("src/posts/*.md");
   });
 
-
   return {
     dir: {
       input: "src",

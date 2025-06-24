@@ -1,36 +1,32 @@
 ---
-layout: layout.njk
+layout: post.njk
 pageType: post
-title: "First-post Name"
+title: "Criando o portfólio e o primeiro post"
 date: 2025-05-26
-tags: [HTML, CSS, JS, VAIQUEBRAR_?2, VAIQUEBRAR_?, API]
+tags: [HTML, CSS, JS, Eleventy, CI]
 ---
+ 
 
-<section class="publication"> 
-    <!-- cabeçalho do publication -->
-    <div class="publication-title">
-        <h1>{{ title }}</h1>    
-    </div>
-    <div class="publication-details">
-        <div class="publication-date">          
-            <small>{{ date | date("dd/MM/yyyy") }}</small>
-        </div>
-        <div class="publication-tags">
-            {% for tag in tags %}
-            <span class="tag">{{ tag }}</span>
-            {% endfor %}
-        </div>
-    </div> 
-    <!-- conteúdo do publication -->
-    <div class="content-publication">
-        Neste momento, estou testando o limitado do width da section post. Qual o limite até a primeira quebra de linha do parágrafo.
-        Neste momento, estou testando o limitado do width da section post. Qual o limite até a primeira quebra de linha do parágrafo
-        Neste momento, estou testando o limitado do width da section post. Qual o limite até a primeira quebra de linha do parágrafo
-        <pre><code class="language-javascript">fetch('/api/match')
-            .then(res => res.json())
-            .then(console.log);
-        </code></pre>
-        Neste momento, estou testando o limitado do width da section post. Qual o limite até a primeira quebra de linha do parágrafo?
-    </div>
+## **Aoba, bão!?**
+markdown 
+1. item 1 
+2. item 2
+3. item 3
 
-</section> 
+~~~javascript
+fetch('/api/match')
+    .then(res => res.json())
+    .then(console.log);
+~~~
+
+~~~php
+echo "Hello World!";
+~~~
+
+~~~html
+<span>isso aqui é html</span>
+~~~
+
+~~~python
+print("trecho de paitom")
+~~~

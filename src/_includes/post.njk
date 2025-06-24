@@ -1,0 +1,22 @@
+{% extends "layout.njk" %}
+
+{% block content %}
+<section class="publication">
+    <div class="publication-title">
+        <h1>{{ title }}</h1>
+    </div>
+    <div class="publication-details">
+        <div class="publication-date">
+            <small>{{ date | date("dd/MM/yyyy") }}</small>
+        </div>
+        <div class="publication-tags">
+            {% for tag in tags %}
+            <span class="tag">{{ tag }}</span>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="content-publication">
+        {{ content | safe }}
+    </div>
+</section>
+{% endblock %}
