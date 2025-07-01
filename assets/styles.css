@@ -245,6 +245,24 @@ a, a:visited, a:hover, a:active {
     gap: 0.5rem;
 }
 
+.content-publication {
+    margin-top: 1rem;
+    width: 100%;
+    line-height: 1.7;
+}
+
+.content-publication h1,
+.content-publication h2,
+.content-publication h3 { 
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    line-height: 1.3;
+}
+
+.content-publication strong {
+    color: #e09ac9;
+}
+
 .resume-contact {
     gap: 1rem;
     margin-bottom: 1rem;
@@ -534,11 +552,11 @@ a, a:visited, a:hover, a:active {
     .publication-tags p {
         margin: 0.2rem 0; 
     }
-
+/* 
     .content-publication {
         margin-top: 1rem;
         width: 100%;
-    }
+    } */
 
     .resume {
         width: 100%;
@@ -643,3 +661,39 @@ a, a:visited, a:hover, a:active {
         font-weight: bold;
     }
 }
+
+
+/* textos nos posts.md */
+
+
+/* estilo para os blocos de código no markdown */
+code[class*="language-"],
+pre[class*="language-"] {
+    font-family: "Consolas", "Menlo", "Monaco", "Andale Mono WT", "Andale Mono", "Courier New", Courier, monospace;
+    background: #2a2734;  
+    color: #c4b9fe;    
+    font-size: 0.9rem;
+    line-height: 1.375;
+    white-space: pre;
+    word-break: break-word;
+    padding: 0.6rem;
+    border-radius: 6px;
+
+    overflow-x: auto;
+    display: block;
+}
+ 
+.token.comment { color: #6c6783; }   
+.token.keyword, .token.operator { color: #e09ac9; }   
+.token.string, .token.attr-value { color: #d9b97f; }   
+.token.function, .token.class-name { color: #82aaff; }   
+.token.number { color: #bd93f9; }   
+.token.punctuation { color: #c4b9fe; }   
+
+pre[class*="language-"]::selection,
+code[class*="language-"]::selection {
+    background: #44405a;
+    color: #ffffff;
+}
+ 
+ 

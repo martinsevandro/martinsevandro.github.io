@@ -11,7 +11,8 @@
         <link href="https://fonts.cdnfonts.com/css/homizio" rel="stylesheet">
         <link href='https://fonts.googleapis.com/css?family=Open Sans' rel='stylesheet'>
                 
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs/themes/prism-tomorrow.css" />
+        
+        
     </head>
 
     <body class="post">
@@ -49,21 +50,21 @@
                     <section class="publication"> 
     <!-- cabeçalho do publication -->
     <div class="publication-title">
-        <h1>Second-post Name</h1>    
+        <h1>{{ title }}</h1>    
     </div>
     <div class="publication-details">
         <div class="publication-date">          
-            <small>27/05/2025</small>
+            <small>{{ date | date("dd/MM/yyyy") }}</small>
         </div>
         <div class="publication-tags">
-<p><span class="tag">IndexedDB</span></p>
-<p><span class="tag">JS</span></p>
-<p><span class="tag">API</span></p>
-<p></div>
-</div>
-<!-- conteúdo do publication -->
-<div class="content-publication">
-Detalhando as principais melhorias do projeto LoL Card Match, onde é possível armazenar as cartas desejadas no IndexedDB (semelhante ao localStorage do Browser).</p>
+            {% for tag in tags %}
+            <span class="tag">{{ tag }}</span>
+            {% endfor %}
+        </div>
+    </div> 
+    <!-- conteúdo do publication -->
+    <div class="content-publication">
+        Detalhando as principais melhorias do projeto LoL Card Match, onde é possível armazenar as cartas desejadas no IndexedDB (semelhante ao localStorage do Browser). 
 <p>Imagem do produto</p>
 <p>Trecho de Código JS.</p>
 <p><pre><code class="language-javascript">fetch('/api/match')
