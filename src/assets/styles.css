@@ -14,7 +14,13 @@ html, body {
     color: #bfc0d1;
     overflow-x: hidden;
 }
- 
+
+html {
+    scroll-behavior: smooth; 
+    scrollbar-width: thin;
+    scrollbar-color: #bfc0d1 transparent; 
+}
+
 img, pre, code, .skill, .tag {
     max-width: 100%;
     overflow-wrap: break-word;
@@ -681,6 +687,11 @@ pre[class*="language-"] {
 
     overflow-x: auto;
     display: block;
+}
+
+.content-publication {
+  overflow-wrap: break-word;
+  contain: layout;
 }
  
 .token.comment { color: #6c6783; }   
