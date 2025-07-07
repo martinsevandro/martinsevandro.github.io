@@ -3,7 +3,7 @@ layout: post.njk
 pageType: post
 title: "Criando o portfólio e o primeiro post"
 date: 2025-05-26
-tags: [HTML, CSS, JS, Eleventy, CI]
+tags: [HTML, CSS, JS, Eleventy, Nunjucks, CI/CD]
 ---
  
 
@@ -34,6 +34,7 @@ A configuração feita no arquivo .eleventy.js, define o comportamento da estrut
 Mostro abaixo, que a estrutura é baseada nos arquivos que são criados no _includes, e o resultado é gerado no _site. Os arquivos .md e .html interpretam Nunjucks por padrão, mas nos posts.md desativei isso para evitar que trechos de código sejam processados e garantir que o conteúdo seja exibido literalmente, como os seguintes que exemplificarei a estrutura do layout.njk e post.njk, de modo que o código não seja executado.
 
 ~~~js 
+// .eleventy.js
 module.exports = function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy("src/assets");
 
@@ -73,6 +74,7 @@ Agora com o layout definido (esquerda para perfil; direita para conteúdo), para
 Um exemplo é este próprio post citado abaixo (metalinguagem). 
 
 ~~~markdown
+<!-- trecho de first-post.md -->
 ---
 layout: post.njk
 pageType: post
@@ -89,4 +91,41 @@ Como este é o primeiro post do portfolio, o seu assunto não poderia ser sobre 
 
 Criado o post, a página principal também será atualizada, pois nela são exibidos os posts em ordem descrescente de publicação. Além de ser possível pesquisar por um post, a busca refere-se ao texto usado no título e tags de cada post, por isso é importante atenção na definição destes durante a criação do post. Este recurso é focado no futuro, quando tiver dezenas de posts e surja a necessidade de buscar um post sobre determinado assunto.
  
+### Actions e Pages
+Usando o GitHub Pages e o Eleventy no fluxo de CI/CD. Sempre que faço um push para a main, o GitHub Actions é acionado automaticamente, que gera os arquivos do site (build) e se tudo der certo ja atualiza direto no GitHub Pages.
+
+~~~yml
+<!-- deploy.yml -->
+name: Build and Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build site with Eleventy
+        run: npm run build
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./_site
+~~~
+
 Colocarei ao final de cada post o [**repositório**](https://github.com/martinsevandro/martinsevandro.github.io) e/ou o link para o projeto, caso estejam disponíveis.
