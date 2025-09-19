@@ -102,7 +102,7 @@ Caso o jogador que desconectou estivesse perdendo, o jogador remanescente recebe
       onde estão as adaptações do _routes.js_ para o _riot.controller_ e _riot.service_, do novo projeto, o que torna até mais organizado esse processo.
 
     No _riot.controller.ts_ ficam apenas as rotas:
-    ~~~ts
+    ~~~js
       @Controller()
       export class RiotController {
          constructor(private readonly riotService: RiotService) {}
@@ -152,7 +152,7 @@ Caso o jogador que desconectou estivesse perdendo, o jogador remanescente recebe
 
     As demais lógicas internas das rotas, até a geração do url que vai buscar na api da riot, é feito no _riot.services.ts_. (Abaixo um trecho disso, mas com adaptações pra não ficar tão extenso)
 
-    ~~~ts
+    ~~~js
         @Injectable()
         export class RiotService {
            private readonly apiKey = process.env.RIOT_API_KEY;
@@ -194,7 +194,7 @@ Caso o jogador que desconectou estivesse perdendo, o jogador remanescente recebe
     Terminando de configurar as adaptações do express.js pro nestjs, foi adicionado ao _main.ts_, o CORS, dependendo da variável de ambiente, que será usado pelo Angular no frontend. Então, quando for testar, serão executados simultaneamente o backend e o frontend, e depois modificado para o deploy.
 
     Dessa forma, as rotas criadas até então no backend são divididas nas que possuem ou não acesso.
-    ~~~ts
+    ~~~js
     //sem autenticação é possível fazer as buscas na api da riot, tal qual no projeto em express:
        + @Controller()
            1. @Get('player/:name/:tag/:server') //busca o PUUID por nome/tag/server
@@ -248,7 +248,7 @@ Caso o jogador que desconectou estivesse perdendo, o jogador remanescente recebe
       O usuário habilitado (com as 10 cartas no deck) pode entrar na fila de pareamento, correspondente ao @SubscribeMessage('join_duel_queue') recebido pelo botão do front, enquanto espera por um oponente (client.emit('waiting_for_opponent')). Quando um segundo usuário entra na fila, uma sala é criada e os dois são removidos da fila. 
       Abaixo tem uns trechos sobre essa etapa descrita acima (mais detalhes só no repositório).
 
-    ~~~ts
+    ~~~js
       @SubscribeMessage('join_duel_queue')
          async handleJoinQueue(@ConnectedSocket() client: Socket) {
             const userId = client.data.userId;
@@ -333,7 +333,7 @@ Caso o jogador que desconectou estivesse perdendo, o jogador remanescente recebe
          }    
     ~~~
 
-    ~~~ts
+    ~~~js
         export class DuelsService {
            private queue: Player[] = [];
            private rooms: Map<string, DuelRoom> = new Map();
@@ -386,7 +386,7 @@ O próximo passo é criar o frontend com Angular, revendo o CORS, e usando como 
 
    No backend, é usado assim. No post sobre o frontend, mostrarei a outra parte.
 
-   ~~~ts
+   ~~~js
       @Controller('health')
       export class HealthController {
          constructor(private readonly healthService: HealthService) {}
