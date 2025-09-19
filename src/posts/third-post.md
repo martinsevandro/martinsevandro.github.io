@@ -23,8 +23,8 @@ Yu-Gi-Oh! 2? Não. O Carta Alta é um tradicional jogo de cartas, onde cada usu�
 4. Cada jogador recebe 3 das 10 cartas do seu deck (por meio de uma função aleatória), e a cada rodada deve escolher uma, após ambos jogadores definirem a sua carta, o vencedor da rodada é definido (maior kda vence! se kda1 === kda2: empate), e as cartas utilizadas na rodada são descartadas.
 
 Problemas que aconteceram (pensei nessas possibilidades durante o desenho do esquema do projeto):
-1. Um jogador, que perdeu a primeira rodada, força desconnect (atualizando a página pra alterar socketId) afim de cancelar o duelo. 
-2. Ou o jogador que estava vencendo o duelo toma desconnect por n motivos.
+1. Um jogador, que perdeu a primeira rodada, força disconnect (atualizando a página pra alterar socketId) afim de cancelar o duelo. 
+2. Ou o jogador que estava vencendo o duelo toma disconnect por n motivos.
 Solução criada:
 Caso o jogador que desconectou estivesse vencendo, o jogador remanescente recebe o resultado do duelo como empate!
 Caso o jogador que desconectou estivesse perdendo, o jogador remanescente recebe o resultado do duelo como vitória!
@@ -62,9 +62,9 @@ Caso o jogador que desconectou estivesse perdendo, o jogador remanescente recebe
         ├── types/
                 └── reques-with-user.ts
         ├── auth.controller.ts
-        └── auth.module.ts
-                ├── auth.service.ts
-                └── jwt-auth-guard.ts
+        ├── auth.module.ts
+        ├── auth.service.ts
+        └── jwt-auth-guard.ts
     ~~~
 
     Usando bcrypt, pra adicionar o hash na criptografia. Validação com JWT (que será WebSocket + REST, útil também na parte dos Duelos).
@@ -87,7 +87,7 @@ Caso o jogador que desconectou estivesse perdendo, o jogador remanescente recebe
     
     Onde o _card.schema.ts_ contém as variáveis que compoem a carta, como championName, riotIdGameName, riotIdTagline, kda, etc. E na _card.utils.ts_ ficam as funções utilitarias para fazer funcionar as que dependem. É a adaptação dos arquivos _dataFilter.js_ e _helpers.js_, do projeto anterior.
     
-    Lembrando que o Deck é composto por até 10 cards (justamente as 10 necessárias para habilitar o pareamento de duelo)
+    Lembrando que o Deck é composto por até 10 cards (justamente as 10 obrigatórias para habilitar o pareamento de duelo)
  
 6. Riot - Criando o módulo para as rotas da api riot:
     ~~~text  
@@ -99,62 +99,60 @@ Caso o jogador que desconectou estivesse perdendo, o jogador remanescente recebe
         └── riot.module.ts
     ~~~
     
-        onde estão as adaptações do _routes.js_ para o _riot.controller_ e _riot.service_, do novo projeto, o que torna até mais organizado esse processo.
+      onde estão as adaptações do _routes.js_ para o _riot.controller_ e _riot.service_, do novo projeto, o que torna até mais organizado esse processo.
 
     No _riot.controller.ts_ ficam apenas as rotas:
-    ~~~js
-        @Controller('api')
-        export class RiotController {
-           constructor(private readonly riotService: RiotService) {}
+    ~~~ts
+      @Controller()
+      export class RiotController {
+         constructor(private readonly riotService: RiotService) {}
 
-           @Get('player/:name/:tag/:server')
-           getPUUID(
-              @Param('name') name: string,
-              @Param('tag') tag: string,
-              @Param('server') server: string,
-              ) {
-                 return this.riotService.getAccountByRiotId(name, tag, server);
-              }
+         @Get('player/:name/:tag/:server')
+         getPUUID(
+            @Param('name') name: string,
+            @Param('tag') tag: string,
+            @Param('server') server: string,
+         ) {
+            return this.riotService.getAccountByRiotId(name, tag, server);
+         }
 
-           @Get('matches/lol/latest/:puuid/:server')
-           async getLatestMatchDetails(
-           @Param('puuid') puuid: string,
-           @Param('server') server: string,
-           ) {
-              const matchIdResponse = await this.riotService.getLastMatchId(
-                 puuid,
-                 server,
-              );
-              const lastMatchId = matchIdResponse;
+         @Get('matches/lol/latest/:puuid/:server')
+         async getLatestMatchDetails(
+            @Param('puuid') puuid: string,
+            @Param('server') server: string,
+         ) {
+            const matchIdResponse = await this.riotService.getLastMatchId(
+               puuid,
+               server,
+            );
+            const lastMatchId = matchIdResponse;
 
-              console.log(`Último ID de partida: ${lastMatchId}`);
+            if (!lastMatchId) {
+               throw new NotFoundException('Nenhuma partida encontrada..');
+            }
 
-              if (!lastMatchId) {
-                 throw new NotFoundException('Nenhuma partida encontrada..');
-              }
+            const matchDetails = await this.riotService.getMatchDetails(
+               puuid,
+               server,
+               lastMatchId,
+            );
+            return matchDetails;
+         }
 
-              const matchDetails = await this.riotService.getMatchDetails(
-                 puuid,
-                 server,
-                 lastMatchId,
-              );
-              return matchDetails;
-           }
-
-           @Get('matches/lol/specific/:puuid/:server/:matchId')
-           getSpecificMatchDetails(
-              @Param('puuid') puuid: string,
-              @Param('server') server: string,
-              @Param('matchId') matchId: string,
-           ) {
-              return this.riotService.getMatchDetails(puuid, server, matchId);
-           }
-        }
+         @Get('matches/lol/specific/:puuid/:server/:matchId')
+         getSpecificMatchDetails(
+            @Param('puuid') puuid: string,
+            @Param('server') server: string,
+            @Param('matchId') matchId: string,
+         ) {
+            return this.riotService.getMatchDetails(puuid, server, matchId);
+         }
+      }
     ~~~
 
     As demais lógicas internas das rotas, até a geração do url que vai buscar na api da riot, é feito no _riot.services.ts_. (Abaixo um trecho disso, mas com adaptações pra não ficar tão extenso)
 
-    ~~~js
+    ~~~ts
         @Injectable()
         export class RiotService {
            private readonly apiKey = process.env.RIOT_API_KEY;
@@ -196,9 +194,9 @@ Caso o jogador que desconectou estivesse perdendo, o jogador remanescente recebe
     Terminando de configurar as adaptações do express.js pro nestjs, foi adicionado ao _main.ts_, o CORS, dependendo da variável de ambiente, que será usado pelo Angular no frontend. Então, quando for testar, serão executados simultaneamente o backend e o frontend, e depois modificado para o deploy.
 
     Dessa forma, as rotas criadas até então no backend são divididas nas que possuem ou não acesso.
-    ~~~js
+    ~~~ts
     //sem autenticação é possível fazer as buscas na api da riot, tal qual no projeto em express:
-       + @Controller('api')
+       + @Controller()
            1. @Get('player/:name/:tag/:server') //busca o PUUID por nome/tag/server
            2. @Get('matches/lol/latest/:puuid/:server') //busca detalhes da última matchId
            3. @Get('matches/lol/specific/:puuid/:server/:matchId') //detalhes da partida especifica
@@ -217,7 +215,9 @@ Caso o jogador que desconectou estivesse perdendo, o jogador remanescente recebe
     ~~~text
     src/duels/
         ├── types/
-                └── duel.types.ts      tipos auxiliares (ex: estado do jogador, carta, partida)
+                └── duels.types.ts      tipos auxiliares (ex: estado do jogador, carta, partida)
+        ├── utils/
+                └── duels.utils.ts       funções de sanitização 
         ├── duels.module.ts
         ├── duels.gateway.ts       websocket gateway
         └── duels.service.ts       lógica de pareamento, controle de partidas
@@ -229,6 +229,9 @@ Caso o jogador que desconectou estivesse perdendo, o jogador remanescente recebe
       - this.server.to(...).emit(...) no backend → envia dados para o cliente
       - socket.on(...) no frontend → escuta eventos vindos do servidor
       - @SubscribeMessage(...) no backend → escuta eventos vindos do cliente
+    
+    
+    "(eu do futuro): Agora com frontend criado, e esses HTML testes removidos, toda conexão WS passa pelo handleConnection, que valida o token JWT. Apenas se tiver ok, é associado userId e username ao socket.data"
   
    ### dificuldades encontradas
       * usuário access-token é notificado que saiu da fila mesmo sem estar na fila.
@@ -242,7 +245,95 @@ Caso o jogador que desconectou estivesse perdendo, o jogador remanescente recebe
 
       A logística do pareamento: 
 
-    ~~~js
+      O usuário habilitado (com as 10 cartas no deck) pode entrar na fila de pareamento, correspondente ao @SubscribeMessage('join_duel_queue') recebido pelo botão do front, enquanto espera por um oponente (client.emit('waiting_for_opponent')). Quando um segundo usuário entra na fila, uma sala é criada e os dois são removidos da fila. 
+      Abaixo tem uns trechos sobre essa etapa descrita acima (mais detalhes só no repositório).
+
+    ~~~ts
+      @SubscribeMessage('join_duel_queue')
+         async handleJoinQueue(@ConnectedSocket() client: Socket) {
+            const userId = client.data.userId;
+            const username = client.data.username;
+            const socketId = client.id;
+
+            try {
+               const deck = await this.duelsService.getUserDeck(userId);
+
+               if (deck.length < 10) {
+                  throw new WsException({
+                     code: 'INSUFFICIENT_DECK'
+                  });
+               }
+
+               const player: Player = {
+                  socketId,
+                  userId,
+                  username,
+                  deck: deck.slice(0, 10),
+                  hand: [],
+                  score: 0,
+               };
+
+               const room = await this.duelsService.addToQueue(player);
+
+               client.emit('waiting_for_opponent');
+
+               if (room) {
+                  const [player1, player2] = room.players;
+
+                  if (player1.userId === player2.userId) {
+                     this.duelsService.removeRoom(room.roomId);
+
+                     throw new WsException({
+                        code: 'ONESELF_DUEL'
+                     });
+                  }
+
+                  const client1 = this.server.sockets.sockets.get(player1.socketId);
+                  const client2 = this.server.sockets.sockets.get(player2.socketId);
+
+                  if (client1 && client2) {
+                     client1.join(room.roomId);
+                     client2.join(room.roomId);
+
+                     const hand1 = await this.duelsService.getDeckForDuel(
+                        player1.userId,
+                     );
+                     const hand2 = await this.duelsService.getDeckForDuel(
+                        player2.userId,
+                     );
+
+                     player1.hand = hand1;
+                     player2.hand = hand2;
+
+                     room.players = [player1, player2];
+                     room.round = 1;
+                     room.scores = { [player1.username]: 0, [player2.username]: 0 };
+
+                     this.server.to(player1.socketId).emit('duel_start', {
+                        roomId: room.roomId,
+                        opponent: player2.username,
+                        deck: player1.hand,
+                     });
+                     this.server.to(player2.socketId).emit('duel_start', {
+                        roomId: room.roomId,
+                        opponent: player1.username,
+                        deck: player2.hand,
+                     });
+                  }
+               }
+            } catch (err) {
+               if (err instanceof WsException) {
+                  throw err;
+               }
+
+               throw new WsException({
+                  code: 'QUEUE_JOIN_FAILED'
+               });
+            }
+         }    
+    ~~~
+
+    ~~~ts
         export class DuelsService {
            private queue: Player[] = [];
            private rooms: Map<string, DuelRoom> = new Map();
@@ -277,6 +368,8 @@ Caso o jogador que desconectou estivesse perdendo, o jogador remanescente recebe
 ## On The Line
 O projeto ainda não está upado no Render, somente após a conclusão do frontend. Mas este é o [**repositório**](https://github.com/martinsevandro/high-card-back) do projeto com todos os detalhes da versão atual. 
 
+
+
 ## O presente e o Futuro
 O Futuro do projeto anterior é o Presente neste:
   * [x] utilizando as rotas para montagem das cartas
@@ -286,3 +379,28 @@ O Futuro do projeto anterior é o Presente neste:
 Armazenamento temporário na memória: no caso da fila de pareamento, salas ativas (com suas cartas sorteadas, pontuação, etc.), socketId para o userId, tudo evapora após o reinício do server, mas por enquanto é o q ta tendo, no futuro aplico Redis ou algo similar. No entanto, a persistencia dos dados de usuários e seus decks estão garantidos no mongodb atlas (limitado, mas tá). 
 
 O próximo passo é criar o frontend com Angular, revendo o CORS, e usando como base o projeto unificado anterior, com interface das cartas e agora adicionando o cadastro, login, deck e duelo!
+
+(eu do futuro): O backend já foi upado no Render! O frontend também foi upado na Vercel, aqui está o link do projeto: [**High Card LoL**](https://high-card-lol.vercel.app/)
+
+   Como o Render (no 0800) hiberna, coloquei um endpoint /health no backend. O frontend consome isso quando um usuário acessa o site. Enquanto o Render carrega o server, o usuário fica numa tela de loading, pois a ideia é que ele interaja apenas quando o backend já estiver pronto. (Demora uns 30s pra carregar, e o server continua ativo por até 15min ociosos antes de voltar a hibernar)
+
+   No backend, é usado assim. No post sobre o frontend, mostrarei a outra parte.
+
+   ~~~ts
+      @Controller('health')
+      export class HealthController {
+         constructor(private readonly healthService: HealthService) {}
+
+         @Get()
+         check() {
+            return this.healthService.check();
+         }
+      }
+
+      @Injectable()
+      export class HealthService {
+         check() {
+            return { status: 'ok', timestamp: new Date().toISOString() };
+         }
+      }
+   ~~~
