@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Usando a API da Riot Games</title>
+        <link rel="stylesheet" href="/assets/styles.css" />
+        <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+        <link href='https://fonts.googleapis.com/css?family=Jaldi' rel='stylesheet'>
+        <link href="https://fonts.cdnfonts.com/css/homizio" rel="stylesheet">
+        <link href='https://fonts.googleapis.com/css?family=Open Sans' rel='stylesheet'>
+        <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon" />
+        
+    </head>
+
+    <body class="post">
+        <header></header>
+
+        <main class="main-post">
+            <div class="container">
+
+                <div class="perfil">
+    <a href="/" class="perfil-link"> 
+        <img src="/assets/imgs/perfil-ef.png" alt="Foto de perfil" class="perfil-image"/>
+        <h2 class="my-name">Evandro Martins</h2>
+    </a>
+
+    <ul class="perfil-description"> 
+        <li>
+            <a href="https://github.com/martinsevandro" target="_blank" rel="noopener noreferrer">
+            <img src="/assets/icons/github-darkmode.png" alt="GitHub" class="perfil-icon" />
+            </a>
+        </li>
+        <li>
+            <a href="https://linkedin.com/in/martinsevandro" target="_blank" rel="noopener noreferrer">
+            <img src="/assets/icons/linkedin-darkmode.png" alt="LinkedIn" class="perfil-icon" />
+            </a>
+        </li>
+    </ul>
+
+    <a href="/resume" class="perfil-resume">RESUME</a>
+
+    <span class="perfil-footer">© 2025</span>
+    
+</div>
+
+                
+<section class="publication">
+    <div class="publication-title">
+        <h1>Usando a API da Riot Games</h1>
+    </div>
+    <div class="publication-details">
+        <div class="publication-date">
+            <small>27/05/2025</small>
+        </div>
+        <div class="publication-tags">
+            
+            <span class="tag">Node.js</span>
+            
+            <span class="tag">Express</span>
+            
+            <span class="tag">Axios</span>
+            
+            <span class="tag">API</span>
+            
+            <span class="tag">Render</span>
+            
+        </div>
+    </div>
+    <div class="content-publication">
+        <h2><strong>API da Riot Games, a.k.a. Rito Gomes</strong></h2>
+<h3>Por que?</h3>
+<p>Estudando sobre análise de dados, resolvi utilizar a API da Riot para fazer algumas brincadeiras. A princípio, eu gostaria de tratar sobre as informações disponíveis de campeonatos de Valorant, mas a Key básica que a Riot disponibiliza não é capaz de tratar sobre Valorant, apenas sobre algumas rotas de League of Legends. Também não é possível obter dados de campeonatos de LoL, apenas sobre dados das ranqueadas, então foi o jeito começar com isso.</p>
+<p>Pelo que entendi, a Riot disponibiliza uma API Key para 3 casos, sendo eles: Teste Básico, que dura 24h, ou seja, é necessário reload diário; Projeto Pessoal, que dura &quot;eternamente&quot;, mas tem limite diários/qtd_acessos; Produto, ou projetos prontos, que já passaram pela confirmação da Riot (este concede mais regalias, mas o processo de avaliação é demorado). (Mais detalhes sobre os <a href="https://developer.riotgames.com/docs/portal"><strong>tipos de chaves</strong></a>)</p>
+<p>Pois bem, comecei utilizando a key de testes para entender como funciona a API deles, quais tipos de informações estão disponíveis e o que posso fazer com eles. Foi então que tive a ideia de criar um projeto sobre cartas com estatísticas das partidas de determinado jogador. Algo único, como obter uma caixa de skin especial de determinado mapa, que tenha sido jogado num Major de Counter-Strike (não necessariamente nesse nível), mas gerar uma carta que represente uma partida memorável para determinado jogador, possível item colecionável (sticker 2.0?).</p>
+<h3>Dados disponíveis</h3>
+<p>Os dados das partidas, a grosso modo, os essenciais, de forma até que simples de se obterem pela API. Alguns precisam de certas combinações para se obter o valor esperado, mas que também é fácil.</p>
+<p>Como tenho acesso apenas a dados de ranqueadas, comecei a fazer os testes com a minha própria conta, verificando status de modos de jogos diferentes (como aram, samuel drifts, arena), pois há rotas diferentes para cada ação, onde inicialmente é necessário informar um nickname e um tagname, e com isso, é possível obter o puuid dessa conta, com este puuid é que as demais informações são trabalhadas.</p>
+<p>Alguns dos dados que achei interessante foram: KDA, Tempo de Partida, Data da Partida, Farm de Minions, %Participação de Abates, Dano Causado, Ouro Recebido. E, juntando os ids de campeão jogado, itens e runas obtidos na API, foi possível mostrar as imagens deles, criando um Card bem interessante, semelhante aos de Pokemon tcg (sem tantos detalhes também...), mas que devido a combinação dos elementos visuais, assinatura do nick e a cor da carta de acordo com eventuais conquistas, já ficou melhor do que eu esperava.</p>
+<h3><strong>Yu-Gi-LoL?</strong></h3>
+<p>Na Figura abaixo há alguns exemplos dos Cards gerados. Determinados status modificam a escolha tanto da skin, quanto a cor da borda, sendo elas dependentes dos dados do KDA, por exemplo, e dependendo da função do jogador, estatísticas diferentes são mostradas na carta (Como Suporte e Atirador). Coloquei um efeito de &quot;flip&quot; e &quot;tilt&quot; (inclinação quando passar o cursor sobre a carta).</p>
+<p><img src="/assets/imgs/kuri_Sup.png" alt="Cards_Examples">
+<img src="/assets/imgs/route_Adc.png" alt="Cards_Examples"></p>
+<p>Atrelado a combinação de fatores como KDA, se houve uma partida perfeita (com 0 mortes), se obteve todos os dragões e barões da partida, etc. existem os achievements, que são ícones especiais que aparecem apenas quando são conquistados. E a skin do campeão na carta também é influenciado pela estatística, ou seja, skins mais bonitas (geralmente as mais recentes lançada$) tem uma %chance de aparecer apenas quando o jogador obter bons resultados.</p>
+<h3>Tecnologias principais</h3>
+<ol>
+<li>
+<p>Uso do Axios, para realizar requisições HTTP na API da Riot (<a href="https://developer.riotgames.com/apis"><strong>documentação com APIs e seus endpoints</strong></a>), lembrando do detalhe que nem todas estão disponíveis para a Chave de Testes.</p>
+</li>
+<li>
+<p>Express com as rotas para os três casos (até o momento), sendo o primeiro para descobrir o puuid da conta, e as outras duas para buscar dados das partidas, seja uma antiga mais específica ou a mais recente, em alguns modos de mapa que a Riot permite.</p>
+</li>
+<li>
+<p>CORS configurado no backend, mas no momento o projeto está unificado. Em movimentações futuras, no caso de separar front do back, ele já está apto para ser adaptado.</p>
+</li>
+</ol>
+<p>Alguns trechos das rotas que foram usadas:</p>
+<ol>
+<li>etapa de buscar o puuid do jogador através do name e tag dele</li>
+</ol>
+<pre><code class="language-js">router.get('/api/player/:name/:tag/:server', async (req, res) =&gt; {
+
+    const { name, tag, server } = req.params; 
+    const regionalRoute = getRegionalRoute(server);  
+
+    const axiosConfig = {
+        headers: { 'X-Riot-Token': process.env.RIOT_API_KEY },
+        timeout: 5000,
+        validateStatus: (status) =&gt; status &lt; 500 
+    };
+    const response = await axios.get(
+        `https://${regionalRoute}.api.riotgames.com/riot/account/v1/accounts/by-riot-id/${name}/${tag}`, 
+        axiosConfig
+        
+    );
+    res.json(response.data); 
+});
+</code></pre>
+<ol start="2">
+<li>etapa: caso não seja informado, o matchId usado será o da última partida do jogador.</li>
+</ol>
+<pre><code class="language-js">router.get('/api/matches/lol/last/:puuid/:server/:matchId', async (req, res) =&gt; {
+
+    const { puuid, server, matchId } = req.params;
+    const regionalRoute = getRegionalRoute(server); 
+
+    const axiosConfig = {
+        headers: { 'X-Riot-Token': process.env.RIOT_API_KEY },
+        timeout: 5000,
+        validateStatus: (status) =&gt; status &lt; 500  
+    };
+ 
+    const matchDetailsResponse = await axios.get(
+        `https://${regionalRoute}.api.riotgames.com/lol/match/v5/matches/${matchId}`,
+        axiosConfig
+    );
+    const matchData = matchDetailsResponse.data;
+ 
+    const playerStats = matchData.info.participants.find(p =&gt; p.puuid === puuid);
+    const duoStats = matchData.info.participants.find(p =&gt; p.puuid !== puuid &amp;&amp; p.subteamPlacement === playerStats.subteamPlacement);
+
+    const championJsonUrl = `http://ddragon.leagueoflegends.com/cdn/15.8.1/data/en_US/champion/${playerStats.championName}.json`;
+    splashArtUrl = `https://ddragon.leagueoflegends.com/cdn/img/champion/loading/${playerStats.championName}_${selectedSkinNum}.jpg`;
+    iconChampionUrl = `https://ddragon.leagueoflegends.com/cdn/15.8.1/img/champion/${duoStats.championName}.png`;
+
+    const filteredData = createFilteredData(matchData, playerStats, splashArtUrl, iconChampionUrl);
+    res.json(filteredData); 
+});
+</code></pre>
+<p>(Coloquei alguns trechos para não ficar tão longo, tirei as partes das validações, erros, etc. Caso queira visualizar na íntegra, o projeto no github estará disponível.)</p>
+<h2>Deploy</h2>
+<p>Utilizei a plataforma Render.com, que possui plano gratuito que serviu muito bem para este tipo de side project. Vinculando o repositorio do projeto no github, ao realizar push na branch main, basta ir nas config do Render.com e atualizar para a nova versão do projeto.</p>
+<p>Agora com a Personal Key, que não tem mais o problema de duração, no próprio Render.com é possível adicioná-la e, caso seja necessário alterar, é bem prático, pois basta acessar em Environment a RIOT_API_KEY.</p>
+<p>Um ponto importante no plano gratuito é que o site fica classificado como &quot;suspenso&quot;, ou seja, quando não há acessos por um tempo, o servidor é temporariamente desligado. Quando alguém acessa novamente, o Render ativa o servidor após alguns segundos. Totalmente compreensível para side projects, já que reduz custos.</p>
+<h2>On The Line</h2>
+<p>O projeto está upado no seguinte link <a href="https://lolcardmatch.onrender.com/"><strong>Lol Card Match</strong></a>! É possível buscar contas em diversos servidores da Riot, como Américas, Europa e Coreia. Basta preencher os campos e fazer a busca. Caso queira uma skin diferente, basta efetuar uma nova busca. Também tem a opção de salvar carta.</p>
+<p>O <a href="https://github.com/martinsevandro/lolapi/"><strong>repositório</strong></a> do projeto com todos os detalhes da versão atual.</p>
+<h2>Futuro</h2>
+<p>O meu roadmap com este projeto contém utilizar a base das rotas pra montagem das cartas e assim criar decks, onde será possível armazenar as cartas que o usuário quiser. Outra ideia é gamificar o sistema, permitindo que usuários disputem utilizando as cartas selecionadas em seus decks.</p>
+
+    </div>
+</section>
+
+
+            </div>
+        </main>       
+
+        <footer>            
+        </footer>
+        <script src="https://cdn.jsdelivr.net/npm/prismjs/prism.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-javascript.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-python.min.js"></script>
+    </body>
+</html>

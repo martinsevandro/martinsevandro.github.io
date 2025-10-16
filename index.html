@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Evandro Martins</title>
+        <link rel="stylesheet" href="/assets/styles.css" />
+        <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+        <link href='https://fonts.googleapis.com/css?family=Jaldi' rel='stylesheet'>
+        <link href="https://fonts.cdnfonts.com/css/homizio" rel="stylesheet">
+        <link href='https://fonts.googleapis.com/css?family=Open Sans' rel='stylesheet'>
+        <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon" />
+        
+    </head>
+
+    <body class="home">
+        <header></header>
+
+        <main class="main-home">
+            <div class="container">
+
+                <div class="perfil">
+    <a href="/" class="perfil-link"> 
+        <img src="/assets/imgs/perfil-ef.png" alt="Foto de perfil" class="perfil-image"/>
+        <h2 class="my-name">Evandro Martins</h2>
+    </a>
+
+    <ul class="perfil-description"> 
+        <li>
+            <a href="https://github.com/martinsevandro" target="_blank" rel="noopener noreferrer">
+            <img src="/assets/icons/github-darkmode.png" alt="GitHub" class="perfil-icon" />
+            </a>
+        </li>
+        <li>
+            <a href="https://linkedin.com/in/martinsevandro" target="_blank" rel="noopener noreferrer">
+            <img src="/assets/icons/linkedin-darkmode.png" alt="LinkedIn" class="perfil-icon" />
+            </a>
+        </li>
+    </ul>
+
+    <a href="/resume" class="perfil-resume">RESUME</a>
+
+    <span class="perfil-footer">© 2025</span>
+    
+</div>
+
+                
+                    
+<section class="posts">
+  <input type="text" id="searchInput" placeholder="Buscar posts..." />
+  <h1 class="title-Main"></h1> 
+  
+  <ul>
+    
+      <li class="post-item">
+        <div class="post-title">
+          <a href="/posts/fourth-post/">Frontend do Carta Alta!</a>
+        </div>
+
+        <div class="post-details">
+          <div class="post-date">          
+            <small>30/07/2025</small>
+          </div>
+
+          <div class="post-tags">
+            
+              <span class="tag">TypeScript</span>
+            
+              <span class="tag">Angular</span>
+            
+              <span class="tag">WebSocket</span>
+            
+          </div> 
+        </div>
+      </li>
+    
+      <li class="post-item">
+        <div class="post-title">
+          <a href="/posts/third-post/">Backend do Carta Alta!</a>
+        </div>
+
+        <div class="post-details">
+          <div class="post-date">          
+            <small>12/07/2025</small>
+          </div>
+
+          <div class="post-tags">
+            
+              <span class="tag">TypeScript</span>
+            
+              <span class="tag">NestJS</span>
+            
+              <span class="tag">MongoDB</span>
+            
+              <span class="tag">API</span>
+            
+          </div> 
+        </div>
+      </li>
+    
+      <li class="post-item">
+        <div class="post-title">
+          <a href="/posts/second-post/">Usando a API da Riot Games</a>
+        </div>
+
+        <div class="post-details">
+          <div class="post-date">          
+            <small>27/05/2025</small>
+          </div>
+
+          <div class="post-tags">
+            
+              <span class="tag">Node.js</span>
+            
+              <span class="tag">Express</span>
+            
+              <span class="tag">Axios</span>
+            
+              <span class="tag">API</span>
+            
+              <span class="tag">Render</span>
+            
+          </div> 
+        </div>
+      </li>
+    
+      <li class="post-item">
+        <div class="post-title">
+          <a href="/posts/first-post/">Criando o portfólio e o primeiro post</a>
+        </div>
+
+        <div class="post-details">
+          <div class="post-date">          
+            <small>26/05/2025</small>
+          </div>
+
+          <div class="post-tags">
+            
+              <span class="tag">HTML</span>
+            
+              <span class="tag">CSS</span>
+            
+              <span class="tag">JS</span>
+            
+              <span class="tag">Eleventy</span>
+            
+              <span class="tag">Nunjucks</span>
+            
+              <span class="tag">CI/CD</span>
+            
+          </div> 
+        </div>
+      </li>
+    
+  </ul>
+</section>
+
+
+<script>
+  const searchInput = document.getElementById("searchInput");
+  const postItems = document.querySelectorAll(".post-item");
+
+  searchInput.addEventListener("input", () => {
+    const query = searchInput.value.toLowerCase();
+
+    postItems.forEach(item => {
+      const text = item.textContent.toLowerCase();
+      item.style.display = text.includes(query) ? "block" : "none";
+    });
+  });
+</script>
+
+                
+
+            </div>
+        </main>       
+
+        <footer>            
+        </footer>
+        <script src="https://cdn.jsdelivr.net/npm/prismjs/prism.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-javascript.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-python.min.js"></script>
+    </body>
+</html>

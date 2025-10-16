@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Backend do Carta Alta!</title>
+        <link rel="stylesheet" href="/assets/styles.css" />
+        <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+        <link href='https://fonts.googleapis.com/css?family=Jaldi' rel='stylesheet'>
+        <link href="https://fonts.cdnfonts.com/css/homizio" rel="stylesheet">
+        <link href='https://fonts.googleapis.com/css?family=Open Sans' rel='stylesheet'>
+        <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon" />
+        
+    </head>
+
+    <body class="post">
+        <header></header>
+
+        <main class="main-post">
+            <div class="container">
+
+                <div class="perfil">
+    <a href="/" class="perfil-link"> 
+        <img src="/assets/imgs/perfil-ef.png" alt="Foto de perfil" class="perfil-image"/>
+        <h2 class="my-name">Evandro Martins</h2>
+    </a>
+
+    <ul class="perfil-description"> 
+        <li>
+            <a href="https://github.com/martinsevandro" target="_blank" rel="noopener noreferrer">
+            <img src="/assets/icons/github-darkmode.png" alt="GitHub" class="perfil-icon" />
+            </a>
+        </li>
+        <li>
+            <a href="https://linkedin.com/in/martinsevandro" target="_blank" rel="noopener noreferrer">
+            <img src="/assets/icons/linkedin-darkmode.png" alt="LinkedIn" class="perfil-icon" />
+            </a>
+        </li>
+    </ul>
+
+    <a href="/resume" class="perfil-resume">RESUME</a>
+
+    <span class="perfil-footer">© 2025</span>
+    
+</div>
+
+                
+<section class="publication">
+    <div class="publication-title">
+        <h1>Backend do Carta Alta!</h1>
+    </div>
+    <div class="publication-details">
+        <div class="publication-date">
+            <small>12/07/2025</small>
+        </div>
+        <div class="publication-tags">
+            
+            <span class="tag">TypeScript</span>
+            
+            <span class="tag">NestJS</span>
+            
+            <span class="tag">MongoDB</span>
+            
+            <span class="tag">API</span>
+            
+        </div>
+    </div>
+    <div class="content-publication">
+        <h2><strong>High Card LoL - diretamente de kakegurui</strong></h2>
+<h3>O futuro chegou</h3>
+<p>Continuando o projeto anterior, que usa a API da Riot, agora dividindo o backend do frontend, mas também usando outras tecnologias.</p>
+<p>Esta parte é a do backend, que utilizando NestJS e MongoDB, também permitem a busca pela carta, mas agora será possível cadastrar um usuário (no mongodb), montar seu deck de cartas e duelar contra outro usuário!</p>
+<h3>It's time to Duel!</h3>
+<p>Yu-Gi-Oh! 2? Não. O Carta Alta é um tradicional jogo de cartas, onde cada usuário mostra uma carta por rodada e aquele que tiver maior valor vence a rodada. Este projeto segue essa ideia, mas ao invés do valor numérico e do naipe do baralho, utiliza o KDA (pelo menos por enquanto). É uma md3, mas que pode causar empate (é raro, mas é possível que os jogadores escolham KDAs iguais, nunca se sabe o deck do oponente)</p>
+<h3>Requisitos e Problemáticas</h3>
+<ol>
+<li>Cada jogador precisa se cadastrar, logar e montar seu deck com 10 cartas (é o limite superior).</li>
+<li>É permitido buscar pelas melhores cartas, inclusive de outros jogadores, e armazenar as escolhidas.</li>
+<li>Logado e com o deck pronto, é possível entrar na fila de duelos. Onde, após encontrar um oponente, o duelo é iniciado.</li>
+<li>Cada jogador recebe 3 das 10 cartas do seu deck (por meio de uma função aleatória), e a cada rodada deve escolher uma, após ambos jogadores definirem a sua carta, o vencedor da rodada é definido (maior kda vence! se kda1 === kda2: empate), e as cartas utilizadas na rodada são descartadas.</li>
+</ol>
+<p>Problemas que aconteceram (pensei nessas possibilidades durante o desenho do esquema do projeto):</p>
+<ol>
+<li>Um jogador, que perdeu a primeira rodada, força disconnect (atualizando a página pra alterar socketId) afim de cancelar o duelo.</li>
+<li>Ou o jogador que estava vencendo o duelo toma disconnect por n motivos.
+Solução criada:
+Caso o jogador que desconectou estivesse vencendo, o jogador remanescente recebe o resultado do duelo como empate!
+Caso o jogador que desconectou estivesse perdendo, o jogador remanescente recebe o resultado do duelo como vitória!</li>
+</ol>
+<h3>Etapas</h3>
+<ol>
+<li>
+<p>Iniciando sobre o banco utilizado:</p>
+<ol>
+<li>MongoDB Atlas (no plano 0800): criado o cluster high-card-cluster e pego a connection string MONGODB_URI, para utilizar no .env do projeto.</li>
+<li>Criado o banco high-card-db.</li>
+<li>Criada a collection 'cards' (não nessa sequência exata), mas na criação da <em>cards.module.ts</em> e <em>card.schema.ts</em>, com Mongoose.</li>
+</ol>
+</li>
+<li>
+<p>Criados os testes iniciais no <em>app.controller.ts</em>, pra verificar se há comunicação do backend com db, e a criação de uma collection com método POST, pra checar se há alteração no Atlas. (deu tudo certo)</p>
+</li>
+<li>
+<p>Users - Criando o módulo de usuários, com:</p>
+<pre><code class="language-text">src/users/
+    ├── interfaces/
+            └── user.interface.ts
+    ├── schemas/
+            └── user.schema.ts 
+    ├── users.module.ts
+    └── users.service.ts
+</code></pre>
+<p>No <em>auth.service.ts</em> será verificado a possível duplicidade no registro de username, com a função findByUsername do <em>users.service.ts</em>, que busca se já existe um, e caso ocorra será impedido.</p>
+</li>
+<li>
+<p>Auth - Etapa de autenticação com o seguinte módulo:</p>
+<pre><code class="language-text">src/auth/
+    ├── dto/
+            ├── login.dto.ts
+            └── register.dto.ts
+    ├── strategies/
+            └── jwt.strategy.ts
+    ├── types/
+            └── reques-with-user.ts
+    ├── auth.controller.ts
+    ├── auth.module.ts
+    ├── auth.service.ts
+    └── jwt-auth-guard.ts
+</code></pre>
+<p>Usando bcrypt, pra adicionar o hash na criptografia. Validação com JWT (que será WebSocket + REST, útil também na parte dos Duelos).</p>
+<p>Para testar o register e login, utilizei o Postman enquanto confirmava no mongoDB Atlas.</p>
+</li>
+<li>
+<p>Cards - Criando o módulo para as cartas:</p>
+<pre><code class="language-text">src/cards/
+    ├── dto/
+            └──create-card.dto.ts
+    ├── schemas/
+            └──card.schema.ts
+    ├── utils/
+            └──card.utils.ts
+    ├── cards.controller.ts
+    ├── cards.module.ts
+    └── cards.service.ts
+</code></pre>
+<p>Onde o <em>card.schema.ts</em> contém as variáveis que compoem a carta, como championName, riotIdGameName, riotIdTagline, kda, etc. E na <em>card.utils.ts</em> ficam as funções utilitarias para fazer funcionar as que dependem. É a adaptação dos arquivos <em>dataFilter.js</em> e <em>helpers.js</em>, do projeto anterior.</p>
+<p>Lembrando que o Deck é composto por até 10 cards (justamente as 10 obrigatórias para habilitar o pareamento de duelo)</p>
+</li>
+<li>
+<p>Riot - Criando o módulo para as rotas da api riot:</p>
+<pre><code class="language-text">src/riot/
+    ├── utils/
+            └── riot.utils.ts
+    ├── riot.controller.ts
+    ├── riot.service.ts
+    └── riot.module.ts
+</code></pre>
+<p>onde estão as adaptações do <em>routes.js</em> para o <em>riot.controller</em> e <em>riot.service</em>, do novo projeto, o que torna até mais organizado esse processo.</p>
+<p>No <em>riot.controller.ts</em> ficam apenas as rotas:</p>
+<pre><code class="language-js">  @Controller()
+  export class RiotController {
+     constructor(private readonly riotService: RiotService) {}
+
+     @Get('player/:name/:tag/:server')
+     getPUUID(
+        @Param('name') name: string,
+        @Param('tag') tag: string,
+        @Param('server') server: string,
+     ) {
+        return this.riotService.getAccountByRiotId(name, tag, server);
+     }
+
+     @Get('matches/lol/latest/:puuid/:server')
+     async getLatestMatchDetails(
+        @Param('puuid') puuid: string,
+        @Param('server') server: string,
+     ) {
+        const matchIdResponse = await this.riotService.getLastMatchId(
+           puuid,
+           server,
+        );
+        const lastMatchId = matchIdResponse;
+
+        if (!lastMatchId) {
+           throw new NotFoundException('Nenhuma partida encontrada..');
+        }
+
+        const matchDetails = await this.riotService.getMatchDetails(
+           puuid,
+           server,
+           lastMatchId,
+        );
+        return matchDetails;
+     }
+
+     @Get('matches/lol/specific/:puuid/:server/:matchId')
+     getSpecificMatchDetails(
+        @Param('puuid') puuid: string,
+        @Param('server') server: string,
+        @Param('matchId') matchId: string,
+     ) {
+        return this.riotService.getMatchDetails(puuid, server, matchId);
+     }
+  }
+</code></pre>
+<p>As demais lógicas internas das rotas, até a geração do url que vai buscar na api da riot, é feito no <em>riot.services.ts</em>. (Abaixo um trecho disso, mas com adaptações pra não ficar tão extenso)</p>
+<pre><code class="language-js">    @Injectable()
+    export class RiotService {
+       private readonly apiKey = process.env.RIOT_API_KEY;
+
+       constructor(private readonly httpService: HttpService) {}
+
+       async getAccountByRiotId(name: string, tag: string, server: string) {
+          const regionalRoute = getRegionalRoute(server);
+          if (!isValidRiotId(name, tag, server)) {
+             throw new HttpException('Parâmetros inválidos', HttpStatus.BAD_REQUEST);
+          }
+
+          if (!regionalRoute) {
+             throw new HttpException('Servidor inválido', HttpStatus.BAD_REQUEST);
+          }
+
+          try {
+             const response = await firstValueFrom(
+                this.httpService.get(
+                   `https://${regionalRoute}.api.riotgames.com/riot/account/v1/accounts/by-riot-id/${name}/${tag}`,
+                   {
+                      headers: { 'X-Riot-Token': this.apiKey },
+                      validateStatus: () =&gt; true,
+                      timeout: 5000,
+                   },
+                ),
+             );
+
+             return response.data;
+          } catch (err) {
+             throw new HttpException(err.response?.data?.status?.message || err.message, err.response?.status || 500);
+          }
+       }
+    }
+</code></pre>
+<p>Também transferi a lógica de gerar os achievments (que estava no <em>app.js</em> ‘-’), para o <em>riot.utils</em>, com a buildAchievements(), dessa forma ficando totalmente no backend, pois passa a ser incorporado no createFilteredData() também, junto das demais informaçções que compõem o card.</p>
+<p>Terminando de configurar as adaptações do express.js pro nestjs, foi adicionado ao <em>main.ts</em>, o CORS, dependendo da variável de ambiente, que será usado pelo Angular no frontend. Então, quando for testar, serão executados simultaneamente o backend e o frontend, e depois modificado para o deploy.</p>
+<p>Dessa forma, as rotas criadas até então no backend são divididas nas que possuem ou não acesso.</p>
+<pre><code class="language-js">//sem autenticação é possível fazer as buscas na api da riot, tal qual no projeto em express:
+   + @Controller()
+       1. @Get('player/:name/:tag/:server') //busca o PUUID por nome/tag/server
+       2. @Get('matches/lol/latest/:puuid/:server') //busca detalhes da última matchId
+       3. @Get('matches/lol/specific/:puuid/:server/:matchId') //detalhes da partida especifica
+//para autenticação, o usuário terá:
+   + @Controller('auth')
+       1.  @Post('register')
+       2.  @Post('login')
+//usuário autenticado poderá:
+   + @Controller('cards')
+       1. @Get('my-deck')  //lista as cartas salvas pelo usuário
+       2. @Post('save')  //salva uma carta no deck (limitado a 10)
+       3. @Delete(':id') //remove uma carta do deck
+</code></pre>
+</li>
+<li>
+<p>Duels - Para criação do duelo com WebSockets com @nestjs/websockets e socket.io</p>
+<pre><code class="language-text">src/duels/
+    ├── types/
+            └── duels.types.ts      tipos auxiliares (ex: estado do jogador, carta, partida)
+    ├── utils/
+            └── duels.utils.ts       funções de sanitização 
+    ├── duels.module.ts
+    ├── duels.gateway.ts       websocket gateway
+    └── duels.service.ts       lógica de pareamento, controle de partidas
+</code></pre>
+<p>Usando o evento padrão do socket para verificar se a conexão foi estabelecida num <em>teste1.html</em>. Testando o duelo com <em>teste1.html</em> vs <em>teste2.html</em>, com os usuários e seus decks já criados no postman.
+Criando os eventos de socket tanto front e back, usando a seguinte ideia:</p>
+<ul>
+<li>socket.emit(...) no frontend → envia dados para o servidor</li>
+<li>this.server.to(...).emit(...) no backend → envia dados para o cliente</li>
+<li>socket.on(...) no frontend → escuta eventos vindos do servidor</li>
+<li>@SubscribeMessage(...) no backend → escuta eventos vindos do cliente</li>
+</ul>
+<p>&quot;(eu do futuro): Agora com frontend criado, e esses HTML testes removidos, toda conexão WS passa pelo handleConnection, que valida o token JWT. Apenas se tiver ok, é associado userId e username ao socket.data&quot;</p>
+<h3>dificuldades encontradas</h3>
+<ul>
+<li>usuário access-token é notificado que saiu da fila mesmo sem estar na fila.</li>
+<li>usuário access-token entra na fila mais de uma vez, o que gera um duelo entre ele, o resultado sendo sempre null, pois as cartas escolhidas valem para os dois, gerando empate no final.</li>
+<li>se o usuário está num duelo e atualiza a página, o duelo não poderá ser terminado, pois um único jogador não conseguirá terminar o duelo e caso tente entrar novamente na fila não conseguirá, pois o seu playerId está vinculado ainda a sala que não encerrou.</li>
+<li>conflitos de notificações no status, devido alguns emits em contextos inesperados, como alterar o status de entrar/sair da fila, sendo que o usuário já está numduelo.</li>
+</ul>
+<h3>solucionando</h3>
+<ul>
+<li>após validar o token com jwt, no momento da conexão, é vinculado um socket válido para o userId, que juntos são utilizados na room (partida criada para os 2 jogadores válidos que estavam na fila).</li>
+<li>assim, um bom e velho if verifica se há duplicatas, conflitos e disconects na sala. Em caso de disconect, o usuário remanecente é notificado. Essa desconexão (proposital ou não) é tratada no handleDisconnect, e o resultado é mostrado para ele (vitória/empate, dependendo do score atual da sala).</li>
+<li>no caso do status, um simples checkin com inMatch e inQueue (no front mesmo), para alterar apenas no contexto correto.</li>
+</ul>
+<p>A logística do pareamento:</p>
+<p>O usuário habilitado (com as 10 cartas no deck) pode entrar na fila de pareamento, correspondente ao @SubscribeMessage('join_duel_queue') recebido pelo botão do front, enquanto espera por um oponente (client.emit('waiting_for_opponent')). Quando um segundo usuário entra na fila, uma sala é criada e os dois são removidos da fila.
+Abaixo tem uns trechos sobre essa etapa descrita acima (mais detalhes só no repositório).</p>
+<pre><code class="language-js">  @SubscribeMessage('join_duel_queue')
+     async handleJoinQueue(@ConnectedSocket() client: Socket) {
+        const userId = client.data.userId;
+        const username = client.data.username;
+        const socketId = client.id;
+
+        try {
+           const deck = await this.duelsService.getUserDeck(userId);
+
+           if (deck.length &lt; 10) {
+              throw new WsException({
+                 code: 'INSUFFICIENT_DECK'
+              });
+           }
+
+           const player: Player = {
+              socketId,
+              userId,
+              username,
+              deck: deck.slice(0, 10),
+              hand: [],
+              score: 0,
+           };
+
+           const room = await this.duelsService.addToQueue(player);
+
+           client.emit('waiting_for_opponent');
+
+           if (room) {
+              const [player1, player2] = room.players;
+
+              if (player1.userId === player2.userId) {
+                 this.duelsService.removeRoom(room.roomId);
+
+                 throw new WsException({
+                    code: 'ONESELF_DUEL'
+                 });
+              }
+
+              const client1 = this.server.sockets.sockets.get(player1.socketId);
+              const client2 = this.server.sockets.sockets.get(player2.socketId);
+
+              if (client1 &amp;&amp; client2) {
+                 client1.join(room.roomId);
+                 client2.join(room.roomId);
+
+                 const hand1 = await this.duelsService.getDeckForDuel(
+                    player1.userId,
+                 );
+                 const hand2 = await this.duelsService.getDeckForDuel(
+                    player2.userId,
+                 );
+
+                 player1.hand = hand1;
+                 player2.hand = hand2;
+
+                 room.players = [player1, player2];
+                 room.round = 1;
+                 room.scores = { [player1.username]: 0, [player2.username]: 0 };
+
+                 this.server.to(player1.socketId).emit('duel_start', {
+                    roomId: room.roomId,
+                    opponent: player2.username,
+                    deck: player1.hand,
+                 });
+                 this.server.to(player2.socketId).emit('duel_start', {
+                    roomId: room.roomId,
+                    opponent: player1.username,
+                    deck: player2.hand,
+                 });
+              }
+           }
+        } catch (err) {
+           if (err instanceof WsException) {
+              throw err;
+           }
+
+           throw new WsException({
+              code: 'QUEUE_JOIN_FAILED'
+           });
+        }
+     }    
+</code></pre>
+<pre><code class="language-js">    export class DuelsService {
+       private queue: Player[] = [];
+       private rooms: Map&lt;string, DuelRoom&gt; = new Map();
+    
+       async addToQueue(player: Player): Promise&lt;DuelRoom | null&gt; {
+          this.queue.push(player);
+          if (this.queue.length &gt;= 2) {
+             const [p1, p2] = this.queue.splice(0, 2);
+             const room: DuelRoom = {
+                roomId: `room-${Date.now()}`,
+                players: [p1, p2],
+                createdAt: Date.now(),
+                scores: {
+                  [p1.userId]: 0,
+                  [p2.userId]: 0,
+                },
+                round: 1,
+                roundPlays: [],
+             };
+             this.rooms.set(room.roomId, room);
+
+             console.log(`Duel room created: ${room.roomId} with players ${p1.username} and ${p2.username}`);
+             return room;
+          }
+
+          return null;
+       }
+    }
+</code></pre>
+</li>
+</ol>
+<h2>On The Line</h2>
+<p>O projeto ainda não está upado no Render, somente após a conclusão do frontend. Mas este é o <a href="https://github.com/martinsevandro/high-card-back"><strong>repositório</strong></a> do projeto com todos os detalhes da versão atual.</p>
+<h2>O presente e o Futuro</h2>
+<p>O Futuro do projeto anterior é o Presente neste:</p>
+<ul>
+<li>[x] utilizando as rotas para montagem das cartas</li>
+<li>[x] criação de deck das cartas buscadas</li>
+<li>[x] duelo entre usuários utilizando seus decks</li>
+</ul>
+<p>Armazenamento temporário na memória: no caso da fila de pareamento, salas ativas (com suas cartas sorteadas, pontuação, etc.), socketId para o userId, tudo evapora após o reinício do server, mas por enquanto é o q ta tendo, no futuro aplico Redis ou algo similar. No entanto, a persistencia dos dados de usuários e seus decks estão garantidos no mongodb atlas (limitado, mas tá).</p>
+<p>O próximo passo é criar o frontend com Angular, revendo o CORS, e usando como base o projeto unificado anterior, com interface das cartas e agora adicionando o cadastro, login, deck e duelo!</p>
+<p>(eu do futuro): O backend já foi upado no Render! O frontend também foi upado na Vercel, aqui está o link do projeto: <a href="https://high-card-lol.vercel.app/"><strong>High Card LoL</strong></a></p>
+<p>Como o Render (no 0800) hiberna, coloquei um endpoint /health no backend. O frontend consome isso quando um usuário acessa o site. Enquanto o Render carrega o server, o usuário fica numa tela de loading, pois a ideia é que ele interaja apenas quando o backend já estiver pronto. (Demora uns 30s pra carregar, e o server continua ativo por até 15min ociosos antes de voltar a hibernar)</p>
+<p>No backend, é usado assim. No post sobre o frontend, mostrarei a outra parte.</p>
+<pre><code class="language-js">   @Controller('health')
+   export class HealthController {
+      constructor(private readonly healthService: HealthService) {}
+
+      @Get()
+      check() {
+         return this.healthService.check();
+      }
+   }
+
+   @Injectable()
+   export class HealthService {
+      check() {
+         return { status: 'ok', timestamp: new Date().toISOString() };
+      }
+   }
+</code></pre>
+
+    </div>
+</section>
+
+
+            </div>
+        </main>       
+
+        <footer>            
+        </footer>
+        <script src="https://cdn.jsdelivr.net/npm/prismjs/prism.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-javascript.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-python.min.js"></script>
+    </body>
+</html>

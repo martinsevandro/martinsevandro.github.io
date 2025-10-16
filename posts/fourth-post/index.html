@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Frontend do Carta Alta!</title>
+        <link rel="stylesheet" href="/assets/styles.css" />
+        <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+        <link href='https://fonts.googleapis.com/css?family=Jaldi' rel='stylesheet'>
+        <link href="https://fonts.cdnfonts.com/css/homizio" rel="stylesheet">
+        <link href='https://fonts.googleapis.com/css?family=Open Sans' rel='stylesheet'>
+        <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon" />
+        
+    </head>
+
+    <body class="post">
+        <header></header>
+
+        <main class="main-post">
+            <div class="container">
+
+                <div class="perfil">
+    <a href="/" class="perfil-link"> 
+        <img src="/assets/imgs/perfil-ef.png" alt="Foto de perfil" class="perfil-image"/>
+        <h2 class="my-name">Evandro Martins</h2>
+    </a>
+
+    <ul class="perfil-description"> 
+        <li>
+            <a href="https://github.com/martinsevandro" target="_blank" rel="noopener noreferrer">
+            <img src="/assets/icons/github-darkmode.png" alt="GitHub" class="perfil-icon" />
+            </a>
+        </li>
+        <li>
+            <a href="https://linkedin.com/in/martinsevandro" target="_blank" rel="noopener noreferrer">
+            <img src="/assets/icons/linkedin-darkmode.png" alt="LinkedIn" class="perfil-icon" />
+            </a>
+        </li>
+    </ul>
+
+    <a href="/resume" class="perfil-resume">RESUME</a>
+
+    <span class="perfil-footer">© 2025</span>
+    
+</div>
+
+                
+<section class="publication">
+    <div class="publication-title">
+        <h1>Frontend do Carta Alta!</h1>
+    </div>
+    <div class="publication-details">
+        <div class="publication-date">
+            <small>30/07/2025</small>
+        </div>
+        <div class="publication-tags">
+            
+            <span class="tag">TypeScript</span>
+            
+            <span class="tag">Angular</span>
+            
+            <span class="tag">WebSocket</span>
+            
+        </div>
+    </div>
+    <div class="content-publication">
+        <h2>High Card LoL</h2>
+<p>O projeto começou como buscador de dados da API da Riot, que combinava as estatísticas do jogador de uma partida e elementos visuais em uma carta, para eternizar aquele momento do jogador. Isso é o <strong>LoL Card Match</strong>. Evoluí isso para o <strong>High Card LoL</strong>, que além de ter essa opção, agora contém um sistema simples de registro de contas de usuário, que quando logado, pode armazenar suas cartas no seu deck e usá-las em duelos contra outros jogadores.</p>
+<p>O modo de jogo é o &quot;carta alta&quot;, famoso jogo de baralho, onde ambos jogadores mostram 1 carta por rodada, e a carta de maior valor vence. Aqui, adaptei para ser utilizado o KDA, em um duelo de melhor de 3 rodadas.</p>
+<p><img src="/assets/imgs/Duelo.png" alt="Duelo"></p>
+<p>No frontend, o navbar é dinâmico devido ao data binding, que quando o usuário está logado, aparecem opções extras como &quot;Vincular Carta&quot;, &quot;Desvincular Carta&quot;, referentes a adicionar/remover a carta buscada no Deck. Usando Router para navegação entre páginas (/home, /deck, /duel, /login, /register), onde tem duas versões da página inicial: a pública (/), sem a opção de &quot;Vincular Carta&quot;, e a autenticada (/home), com a opção. Ja as rotas do Deck e Duelo usam Guards para bloquear usuários não autenticados.</p>
+<p>Abaixo tem a imagem da página de Deck numa resolução desktop:</p>
+<p><img src="/assets/imgs/Deck.png" alt="Deck"></p>
+<h3>Angular</h3>
+<p>No projeto anterior, as cartas eram feitas via innerHTML e manipulação do DOM. Já neste, resolvi usar o Angular, para estudá-lo, juntamente do Typescript.</p>
+<h4>Etapas</h4>
+<p>Escolhi o Angular 19, usando o modo tradicional (pq já havia assistido um conteúdo antigo que usava esse formato: <a href="https://www.youtube.com/watch?v=vJt_K1bFUeA&amp;list=PLnDvRpP8Bnex2GQEN0768_AxZg_RaIGmw&amp;index=1"><strong>Angular 13, Matheus Battisti</strong></a>). A estilização foi com Tailwind 3.4.1.</p>
+<pre><code class="language-text">    npm install -g @angular/cli@19
+    ng new high-card-front --directory . --routing --style=css --standalone false
+</code></pre>
+<p>No Angular, para criar os primeiros componentes da seguinte forma:</p>
+<pre><code class="language-text">    ng generate component components/navbar
+    ng generate component components/card-container
+    ng generate component components/card
+</code></pre>
+<p>Inicialmente, o foco era fazer funcionar tal qual o projeto base. Então, estruturei o Card model baseado no schema usado no backend. Adaptei o código antigo de montar cartas (<em>app.js</em> e <em>cardContentBuilder.js</em>) para o Angular, separando em <em>card.component.ts</em> e <em>card-html-builder.service.ts</em>. Não foi tão direto, pois eu usava sanitizedThirdLine como SafeHtml, mas tentar iterar sobre ela com *ngFor, que espera um array, tava dando probleminha.</p>
+<p>Também teve outras instalações como o vanilla-tilt, para os efeitos na carta, e o html2canvas, para o botão de salvar, que também estão no projeto base.</p>
+<p>No Deck tem um slide, tanto mobile/desktop, onde mostram até 3 cartas por vez (previous, current e next). O &quot;Vincular Carta&quot; na &quot;/home&quot; (referente a curtirCarta()) chama um service para criar a carta, mantendo sua estrutura e seu estado para ser salvo da mesma forma no Deck.</p>
+<p>Os services concentram a comunicação com o backend (ex: autenticação, card, duelo, Riot API), gerenciam estados reativos com BehaviorSubject e Observable (deck e duelo em tempo real) e isolam funcionalidades específicas (ex: montagem visual das cartas, health check). Assim, os componentes ficam focados na interface, enquanto os services na lógica do negócio.</p>
+<p>Um exemplo é no duelo: quando o usuário seleciona uma carta, o DuelStateService usa um BehaviorSubject para atualizar o estado selectedCard$. Assim que isso acontece, qualquer componente que esteja inscrito nesse Observable reage automaticamente, exibindo a carta, mudando a fase do duelo e esperando a jogada do oponente, sem precisar recarregar a página ou manipular o DOM.</p>
+<p>A estrutura de diretórios dessa parte do app ficou assim (quando finalmente concluída ;x). Além dos assets que foram reutilizados, dos enviroments, e de outros configs. (Para mais detalhes só caçar no <a href="https://github.com/martinsevandro/high-card-front"><strong>repositório</strong></a>)</p>
+<pre><code class="language-text">    src/app/
+        ├── components/
+                ├── card/
+                ├── card-container/
+                ├── footer/
+                ├── health/
+                └── navbar/
+        ├── pages/
+                ├── deck/
+                ├── duel/
+                ├── home/
+                ├── login/
+                └── register/
+        ├── services/
+                ├── auth/
+                ├── card/
+                ├── duel/
+                ├── health/
+                └── riot/
+        ├── guards/
+        ├── models/
+        ├── app-rounting.module.ts
+        ├── app.component.ts
+        └── app.module.ts
+</code></pre>
+<h3>Deploys: Vercel e Render</h3>
+<p>No projeto do LoL Card Match, tinha sido deployado todo o projeto no Render, ou seja, ele é um repositório completo, contendo backend e frontend, e o Render permitia isso. Já neste aqui, como resolvi separar em dois repositórios. A Vercel (que escolhi pra testá-la) foi usada apenas para o deploy do frontend, e o backend foi no Render. O banco de dados foi no MongoDB Atlas. Todos com planos gratuitos, pois o projeto é para aprendizado.</p>
+<p>Como citado no post de backend sobre CORS, aqui foi necessário adaptar o modo production para os links corretos do backend + frontend, quando deployados, nos respectivos Render e Vercel, e também como localhost, quando estivesse no modo desenvolvimento.</p>
+<h3>WebSocket</h3>
+<p>Definido no backend, os eventos de socket podem ser visualizadas pelo console de rede do navegador, onde na imagem abaixo, coloquei as etapas de um jogador que logou, entrou na fila de duelo, esperou por um outro usuário fazer o mesmo, jogou duas rodadas, ganhou o duelo e entrou novamente na fila para jogar novamente.</p>
+<p>Durante o duelo, o WS exige autenticação, usando JWT, seguindo a regra explicada no post do backend, a respeito dos refresh, disconnect, etc. O WS foi usado pra permitir o duelo em tempo real, caso tivesse um chat na partida, também poderia ser realizado graças a ele.</p>
+<p><img src="/assets/imgs/RedeWebSocketRespostas.png" alt="WS_Respostas"></p>
+<h3>Health</h3>
+<p>Aqui é a parte da ignição do site, por parte do frontend, pois no post do backend foi citado que o Render, nessa versão 0800, hiberna o servidor quando não é usado. Então, para melhorar a experiência de usuário, adicionei uma tela de loading quando o usuário acessa o site, onde é feito um pingpong entre a Vercel e o Render. Uma requisição é enviada para o Render, e a resposta que o servidor foi ligado é enviada de volta, quando isso acontece, o usuário pode acessar e usufruir normalmente. Abaixo tem um trecho de código dessa parte, agora na visão do Angular, já que a parte do backend está no post anterior.</p>
+<pre><code class="language-js">export class HealthService {
+   public backendReadySubject = new BehaviorSubject&lt;boolean&gt;(false);
+   public backendReady$ = this.backendReadySubject.asObservable();
+
+   private healthCheckUrl = `${environment.apiUrl}/api/health`;
+   private isPollingActive = false;
+   private pollingSubscription: any;
+
+   constructor(private http: HttpClient) {}
+
+   startPolling(intervalMs: number = 3000): void {
+       if (this.isPollingActive || this.backendReadySubject.value) return;
+
+       this.isPollingActive = true; 
+
+       this.pollingSubscription = interval(intervalMs)
+       .pipe(
+           switchMap(() =&gt; this.checkHealth())
+       )
+       .subscribe(isHealthy =&gt; {
+           if (isHealthy &amp;&amp; !this.backendReadySubject.value) { 
+           this.backendReadySubject.next(true);
+           this.stopPolling();
+           }
+       });
+   }
+
+   private checkHealth(): Observable&lt;boolean&gt; {
+       return this.http.get&lt;{ status: string }&gt;(this.healthCheckUrl).pipe(
+       map(res =&gt; res.status === 'ok'),
+       catchError(error =&gt; {
+           console.log('Backend não respondeu:', error.message);
+   
+           this.backendReadySubject.next(false);
+
+           return of(false);
+       })
+       );
+   }
+
+   stopPolling(): void {
+       this.isPollingActive = false;
+       if (this.pollingSubscription) {
+       this.pollingSubscription.unsubscribe();
+       } 
+   }
+}
+</code></pre>
+<h2>Conclusão</h2>
+<p>Bem amigos, nesta evolução do projeto vi alguns novos conceitos e realizei práticas:</p>
+<ul>
+<li>Separação do frontend (Vercel) e backend (Render), com suas integrações e versionamento com Github</li>
+<li>Uso do Angular e TypeScript, substituindo manipulação manual por componentes e services</li>
+<li>Configuração de CORS para ambientes de desenvolvimento e produção</li>
+<li>WebSocket com autenticação JWT para comunicação em tempo real</li>
+<li>Tela de health check para contornar o problema de hibernação do Render 0800</li>
+<li>Uso de RxJS com BehaviorSubject e Observable para gerenciar estados reativos, principalmente no duelo, garantindo atualização automática dos componentes sem recarregar a página</li>
+<li>Uso de Guards e navegação protegida, restringindo algumas rotas a usuários autenticados e mantendo outras páginas públicas</li>
+</ul>
+<h2>On The Line</h2>
+<p>Está disponível na Vercel, aqui está o link: <a href="https://high-card-lol.vercel.app/"><strong>High Card LoL</strong></a>.
+E aqui o <a href="https://github.com/martinsevandro/high-card-front"><strong>repositório</strong></a> do projeto.</p>
+<h2>Futuro</h2>
+<ul>
+<li>Atualizações nas cartas</li>
+<li>Filas ranqueadas</li>
+<li>AWS</li>
+</ul>
+
+    </div>
+</section>
+
+
+            </div>
+        </main>       
+
+        <footer>            
+        </footer>
+        <script src="https://cdn.jsdelivr.net/npm/prismjs/prism.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-javascript.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-python.min.js"></script>
+    </body>
+</html>
