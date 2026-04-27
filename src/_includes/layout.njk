@@ -4,6 +4,26 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>{{ title }}</title>
+        
+        <!-- SEO Meta Tags -->
+        <meta name="description" content="{{ description or 'Evandro Martins - Desenvolvedor Full Stack com experiência em TypeScript, Angular, Node.js, NestJS, MongoDB e Data Engineering' }}" />
+        <meta name="author" content="Evandro Martins" />
+        <link rel="canonical" href="https://martinsevandro.github.io{{ page.url }}" />
+        
+        <!-- Open Graph Tags (Social Media) -->
+        <meta property="og:title" content="{{ title }}" />
+        <meta property="og:description" content="{{ description or 'Portfólio e Blog técnico de Evandro Martins' }}" />
+        <meta property="og:url" content="https://martinsevandro.github.io{{ page.url }}" />
+        <meta property="og:type" content="{% if pageType == 'post' %}article{% elif pageType == 'curriculum' %}profile{% else %}website{% endif %}" />
+        <meta property="og:image" content="https://martinsevandro.github.io{{ image or '/assets/imgs/perfil-ef.png' }}" />
+        <meta property="og:locale" content="pt_BR" />
+        
+        <!-- Twitter Card Tags -->
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="{{ title }}" />
+        <meta name="twitter:description" content="{{ description or 'Portfólio e Blog técnico de Evandro Martins' }}" />
+        <meta name="twitter:image" content="https://martinsevandro.github.io{{ image or '/assets/imgs/perfil-ef.png' }}" />
+        
         <link rel="stylesheet" href="/assets/styles.css" />
         <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
@@ -11,6 +31,35 @@
         <link href="https://fonts.cdnfonts.com/css/homizio" rel="stylesheet">
         <link href='https://fonts.googleapis.com/css?family=Open Sans' rel='stylesheet'>
         <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon" />
+        
+        <!-- JSON-LD Structured Data -->
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "{% if pageType == 'post' %}BlogPosting{% elif pageType == 'curriculum' %}Person{% else %}Person{% endif %}",
+            {% if pageType == 'post' %}
+            "headline": "{{ title }}",
+            "description": "{{ description or 'Post técnico' }}",
+            "image": "https://martinsevandro.github.io{{ image or '/assets/imgs/perfil-ef.png' }}",
+            "datePublished": "{{ date | date('yyyy-MM-dd') }}",
+            "author": {
+                "@type": "Person",
+                "name": "{{ author or 'Evandro Martins' }}",
+                "url": "https://martinsevandro.github.io"
+            },
+            "keywords": "{{ tags.join(', ') if tags else 'tecnologia, desenvolvimento' }}"
+            {% else %}
+            "name": "{{ title }}",
+            "url": "https://martinsevandro.github.io",
+            "image": "https://martinsevandro.github.io/assets/imgs/perfil-ef.png",
+            "description": "{{ description or 'Desenvolvedor Full Stack - TypeScript, Angular, Node.js, NestJS, MongoDB, Data Engineering' }}",
+            "sameAs": [
+                "https://github.com/martinsevandro",
+                "https://linkedin.com/in/martinsevandro"
+            ]
+            {% endif %}
+        }
+        </script>
         
     </head>
 

@@ -3,7 +3,10 @@ layout: post.njk
 pageType: post
 title: "Frontend do Carta Alta!"
 date: 2025-07-30
-tags: [TypeScript, Angular, WebSocket] 
+tags: [TypeScript, Angular, WebSocket]
+description: "Frontend do jogo Carta Alta desenvolvido com Angular. Componentes responsivos, autenticação de usuários, WebSocket para duelos em tempo real e gerenciamento de deck de cartas."
+image: "/assets/imgs/Duelo.png"
+author: "Evandro Martins"
 ---
 
 ## High Card LoL
@@ -12,13 +15,13 @@ O projeto começou como buscador de dados da API da Riot, que combinava as estat
 
 O modo de jogo é o "carta alta", famoso jogo de baralho, onde ambos jogadores mostram 1 carta por rodada, e a carta de maior valor vence. Aqui, adaptei para ser utilizado o KDA, em um duelo de melhor de 3 rodadas. 
 
-![Duelo](/assets/imgs/Duelo.png)
+![Interface de duelo do jogo Carta Alta mostrando dois decks em confronto direto com cartas lado a lado comparando KDA](/assets/imgs/Duelo.png)
 
 No frontend, o navbar é dinâmico devido ao data binding, que quando o usuário está logado, aparecem opções extras como "Vincular Carta", "Desvincular Carta", referentes a adicionar/remover a carta buscada no Deck. Usando Router para navegação entre páginas (/home, /deck, /duel, /login, /register), onde tem duas versões da página inicial: a pública (/), sem a opção de "Vincular Carta", e a autenticada (/home), com a opção. Ja as rotas do Deck e Duelo usam Guards para bloquear usuários não autenticados.
 
 Abaixo tem a imagem da página de Deck numa resolução desktop:
 
-![Deck](/assets/imgs/Deck.png) 
+![Página do deck no frontend do Carta Alta em resolução desktop exibindo navegação e visualização de cartas do usuário](/assets/imgs/Deck.png) 
 
 
 ### Angular
@@ -90,7 +93,7 @@ Definido no backend, os eventos de socket podem ser visualizadas pelo console de
 
 Durante o duelo, o WS exige autenticação, usando JWT, seguindo a regra explicada no post do backend, a respeito dos refresh, disconnect, etc. O WS foi usado pra permitir o duelo em tempo real, caso tivesse um chat na partida, também poderia ser realizado graças a ele. 
 
-![WS_Respostas](/assets/imgs/RedeWebSocketRespostas.png) 
+![Diagrama de comunicação WebSocket mostrando sequência de eventos de um duelo: login, fila, seleção de cartas e vitória](/assets/imgs/RedeWebSocketRespostas.png) 
 
 
 ### Health

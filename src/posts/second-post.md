@@ -3,7 +3,10 @@ layout: post.njk
 pageType: post
 title: "Usando a API da Riot Games"
 date: 2025-05-27
-tags: [Node.js, Express, Axios, API, Render] 
+tags: [Node.js, Express, Axios, API, Render]
+description: "Explorando a API da Riot Games para coletar dados de League of Legends e criar cartas memoráveis de partidas. Uso de Node.js, Express e Axios para consumo de dados."
+image: "/assets/imgs/kuri_Sup.png"
+author: "Evandro Martins"
 ---
 
 ## **API da Riot Games, a.k.a. Rito Gomes**
@@ -26,8 +29,8 @@ Alguns dos dados que achei interessante foram: KDA, Tempo de Partida, Data da Pa
 ### **Yu-Gi-LoL?**
 Na Figura abaixo há alguns exemplos dos Cards gerados. Determinados status modificam a escolha tanto da skin, quanto a cor da borda, sendo elas dependentes dos dados do KDA, por exemplo, e dependendo da função do jogador, estatísticas diferentes são mostradas na carta (Como Suporte e Atirador). Coloquei um efeito de "flip" e "tilt" (inclinação quando passar o cursor sobre a carta).
  
-![Cards_Examples](/assets/imgs/kuri_Sup.png) 
-![Cards_Examples](/assets/imgs/route_Adc.png) 
+![Exemplos de cartas de jogadores geradas pela API da Riot Games mostrando dados de KDA com diferentes skins e funções](/assets/imgs/kuri_Sup.png) 
+![Exemplo de carta de atirador ADC gerada com dados da partida destacando estatísticas e performance do jogador](/assets/imgs/route_Adc.png) 
 
 Atrelado a combinação de fatores como KDA, se houve uma partida perfeita (com 0 mortes), se obteve todos os dragões e barões da partida, etc. existem os achievements, que são ícones especiais que aparecem apenas quando são conquistados. E a skin do campeão na carta também é influenciado pela estatística, ou seja, skins mais bonitas (geralmente as mais recentes lançada$) tem uma %chance de aparecer apenas quando o jogador obter bons resultados. 
 
