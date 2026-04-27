@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://martinsevandro.github.io/sitemap.xml

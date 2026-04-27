@@ -1,0 +1,32 @@
+---
+permalink: /sitemap.xml
+eleventyExcludeFromCollections: true
+---
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Homepage -->
+  <url>
+    <loc>https://martinsevandro.github.io/</loc>
+    <lastmod>{{ now | date("yyyy-MM-dd") }}</lastmod>
+    <priority>1.0</priority>
+    <changefreq>weekly</changefreq>
+  </url>
+
+  <!-- Resume page -->
+  <url>
+    <loc>https://martinsevandro.github.io/resume/</loc>
+    <lastmod>{{ now | date("yyyy-MM-dd") }}</lastmod>
+    <priority>0.7</priority>
+    <changefreq>monthly</changefreq>
+  </url>
+
+  <!-- All blog posts -->
+  {%- for post in collections.post %}
+  <url>
+    <loc>https://martinsevandro.github.io{{ post.url }}</loc>
+    <lastmod>{{ post.date | date("yyyy-MM-dd") }}</lastmod>
+    <priority>0.8</priority>
+    <changefreq>never</changefreq>
+  </url>
+  {%- endfor %}
+</urlset>

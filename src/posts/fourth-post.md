@@ -3,7 +3,10 @@ layout: post.njk
 pageType: post
 title: "Frontend do Carta Alta!"
 date: 2025-07-30
-tags: [TypeScript, Angular, WebSocket] 
+tags: [TypeScript, Angular, WebSocket]
+description: "Frontend do jogo Carta Alta desenvolvido com Angular. Componentes responsivos, autenticação de usuários, WebSocket para duelos em tempo real e gerenciamento de deck de cartas."
+image: "/assets/imgs/Duelo.png"
+author: "Evandro Martins"
 ---
 
 ## High Card LoL

@@ -3,7 +3,10 @@ layout: post.njk
 pageType: post
 title: "Backend do Carta Alta!"
 date: 2025-07-12
-tags: [TypeScript, NestJS, MongoDB, API] 
+tags: [TypeScript, NestJS, MongoDB, API]
+description: "Implementação do backend do jogo Carta Alta com NestJS e MongoDB. Sistema de usuários, decks de cartas, duelos em tempo real e integração com dados da Riot Games."
+image: "/assets/imgs/esa_Arena.png"
+author: "Evandro Martins"
 ---
 
 ## **High Card LoL - diretamente de kakegurui**

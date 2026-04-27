@@ -3,7 +3,10 @@ layout: post.njk
 pageType: post
 title: "Usando a API da Riot Games"
 date: 2025-05-27
-tags: [Node.js, Express, Axios, API, Render] 
+tags: [Node.js, Express, Axios, API, Render]
+description: "Explorando a API da Riot Games para coletar dados de League of Legends e criar cartas memoráveis de partidas. Uso de Node.js, Express e Axios para consumo de dados."
+image: "/assets/imgs/kuri_Sup.png"
+author: "Evandro Martins"
 ---
 
 ## **API da Riot Games, a.k.a. Rito Gomes**

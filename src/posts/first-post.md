@@ -4,6 +4,9 @@ pageType: post
 title: "Criando o portfólio e o primeiro post"
 date: 2025-05-26
 tags: [HTML, CSS, JS, Eleventy, Nunjucks, CI/CD]
+description: "Aprenda como criar um portfólio estático com Eleventy, Nunjucks e GitHub Pages. Detalhes sobre configuração, deploy automatizado com CI/CD e estrutura do projeto."
+image: "/assets/imgs/perfil-ef.png"
+author: "Evandro Martins"
 ---
  
 
