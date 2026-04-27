@@ -4,6 +4,26 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Frontend do Carta Alta!</title>
+        
+        <!-- SEO Meta Tags -->
+        <meta name="description" content="Frontend do jogo Carta Alta desenvolvido com Angular. Componentes responsivos, autenticação de usuários, WebSocket para duelos em tempo real e gerenciamento de deck de cartas." />
+        <meta name="author" content="Evandro Martins" />
+        <link rel="canonical" href="https://martinsevandro.github.io/posts/fourth-post/" />
+        
+        <!-- Open Graph Tags (Social Media) -->
+        <meta property="og:title" content="Frontend do Carta Alta!" />
+        <meta property="og:description" content="Frontend do jogo Carta Alta desenvolvido com Angular. Componentes responsivos, autenticação de usuários, WebSocket para duelos em tempo real e gerenciamento de deck de cartas." />
+        <meta property="og:url" content="https://martinsevandro.github.io/posts/fourth-post/" />
+        <meta property="og:type" content="article" />
+        <meta property="og:image" content="https://martinsevandro.github.io/assets/imgs/Duelo.png" />
+        <meta property="og:locale" content="pt_BR" />
+        
+        <!-- Twitter Card Tags -->
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Frontend do Carta Alta!" />
+        <meta name="twitter:description" content="Frontend do jogo Carta Alta desenvolvido com Angular. Componentes responsivos, autenticação de usuários, WebSocket para duelos em tempo real e gerenciamento de deck de cartas." />
+        <meta name="twitter:image" content="https://martinsevandro.github.io/assets/imgs/Duelo.png" />
+        
         <link rel="stylesheet" href="/assets/styles.css" />
         <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
@@ -11,6 +31,26 @@
         <link href="https://fonts.cdnfonts.com/css/homizio" rel="stylesheet">
         <link href='https://fonts.googleapis.com/css?family=Open Sans' rel='stylesheet'>
         <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon" />
+        
+        <!-- JSON-LD Structured Data -->
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "BlogPosting",
+            
+            "headline": "Frontend do Carta Alta!",
+            "description": "Frontend do jogo Carta Alta desenvolvido com Angular. Componentes responsivos, autenticação de usuários, WebSocket para duelos em tempo real e gerenciamento de deck de cartas.",
+            "image": "https://martinsevandro.github.io/assets/imgs/Duelo.png",
+            "datePublished": "2025-07-30",
+            "author": {
+                "@type": "Person",
+                "name": "Evandro Martins",
+                "url": "https://martinsevandro.github.io"
+            },
+            "keywords": "TypeScript, Angular, WebSocket"
+            
+        }
+        </script>
         
     </head>
 
@@ -68,10 +108,10 @@
         <h2>High Card LoL</h2>
 <p>O projeto começou como buscador de dados da API da Riot, que combinava as estatísticas do jogador de uma partida e elementos visuais em uma carta, para eternizar aquele momento do jogador. Isso é o <strong>LoL Card Match</strong>. Evoluí isso para o <strong>High Card LoL</strong>, que além de ter essa opção, agora contém um sistema simples de registro de contas de usuário, que quando logado, pode armazenar suas cartas no seu deck e usá-las em duelos contra outros jogadores.</p>
 <p>O modo de jogo é o &quot;carta alta&quot;, famoso jogo de baralho, onde ambos jogadores mostram 1 carta por rodada, e a carta de maior valor vence. Aqui, adaptei para ser utilizado o KDA, em um duelo de melhor de 3 rodadas.</p>
-<p><img src="/assets/imgs/Duelo.png" alt="Duelo"></p>
+<p><img src="/assets/imgs/Duelo.png" alt="Interface de duelo do jogo Carta Alta mostrando dois decks em confronto direto com cartas lado a lado comparando KDA"></p>
 <p>No frontend, o navbar é dinâmico devido ao data binding, que quando o usuário está logado, aparecem opções extras como &quot;Vincular Carta&quot;, &quot;Desvincular Carta&quot;, referentes a adicionar/remover a carta buscada no Deck. Usando Router para navegação entre páginas (/home, /deck, /duel, /login, /register), onde tem duas versões da página inicial: a pública (/), sem a opção de &quot;Vincular Carta&quot;, e a autenticada (/home), com a opção. Ja as rotas do Deck e Duelo usam Guards para bloquear usuários não autenticados.</p>
 <p>Abaixo tem a imagem da página de Deck numa resolução desktop:</p>
-<p><img src="/assets/imgs/Deck.png" alt="Deck"></p>
+<p><img src="/assets/imgs/Deck.png" alt="Página do deck no frontend do Carta Alta em resolução desktop exibindo navegação e visualização de cartas do usuário"></p>
 <h3>Angular</h3>
 <p>No projeto anterior, as cartas eram feitas via innerHTML e manipulação do DOM. Já neste, resolvi usar o Angular, para estudá-lo, juntamente do Typescript.</p>
 <h4>Etapas</h4>
@@ -121,7 +161,7 @@
 <h3>WebSocket</h3>
 <p>Definido no backend, os eventos de socket podem ser visualizadas pelo console de rede do navegador, onde na imagem abaixo, coloquei as etapas de um jogador que logou, entrou na fila de duelo, esperou por um outro usuário fazer o mesmo, jogou duas rodadas, ganhou o duelo e entrou novamente na fila para jogar novamente.</p>
 <p>Durante o duelo, o WS exige autenticação, usando JWT, seguindo a regra explicada no post do backend, a respeito dos refresh, disconnect, etc. O WS foi usado pra permitir o duelo em tempo real, caso tivesse um chat na partida, também poderia ser realizado graças a ele.</p>
-<p><img src="/assets/imgs/RedeWebSocketRespostas.png" alt="WS_Respostas"></p>
+<p><img src="/assets/imgs/RedeWebSocketRespostas.png" alt="Diagrama de comunicação WebSocket mostrando sequência de eventos de um duelo: login, fila, seleção de cartas e vitória"></p>
 <h3>Health</h3>
 <p>Aqui é a parte da ignição do site, por parte do frontend, pois no post do backend foi citado que o Render, nessa versão 0800, hiberna o servidor quando não é usado. Então, para melhorar a experiência de usuário, adicionei uma tela de loading quando o usuário acessa o site, onde é feito um pingpong entre a Vercel e o Render. Uma requisição é enviada para o Render, e a resposta que o servidor foi ligado é enviada de volta, quando isso acontece, o usuário pode acessar e usufruir normalmente. Abaixo tem um trecho de código dessa parte, agora na visão do Angular, já que a parte do backend está no post anterior.</p>
 <pre><code class="language-js">export class HealthService {

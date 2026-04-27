@@ -4,6 +4,26 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>Usando a API da Riot Games</title>
+        
+        <!-- SEO Meta Tags -->
+        <meta name="description" content="Explorando a API da Riot Games para coletar dados de League of Legends e criar cartas memoráveis de partidas. Uso de Node.js, Express e Axios para consumo de dados." />
+        <meta name="author" content="Evandro Martins" />
+        <link rel="canonical" href="https://martinsevandro.github.io/posts/second-post/" />
+        
+        <!-- Open Graph Tags (Social Media) -->
+        <meta property="og:title" content="Usando a API da Riot Games" />
+        <meta property="og:description" content="Explorando a API da Riot Games para coletar dados de League of Legends e criar cartas memoráveis de partidas. Uso de Node.js, Express e Axios para consumo de dados." />
+        <meta property="og:url" content="https://martinsevandro.github.io/posts/second-post/" />
+        <meta property="og:type" content="article" />
+        <meta property="og:image" content="https://martinsevandro.github.io/assets/imgs/kuri_Sup.png" />
+        <meta property="og:locale" content="pt_BR" />
+        
+        <!-- Twitter Card Tags -->
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content="Usando a API da Riot Games" />
+        <meta name="twitter:description" content="Explorando a API da Riot Games para coletar dados de League of Legends e criar cartas memoráveis de partidas. Uso de Node.js, Express e Axios para consumo de dados." />
+        <meta name="twitter:image" content="https://martinsevandro.github.io/assets/imgs/kuri_Sup.png" />
+        
         <link rel="stylesheet" href="/assets/styles.css" />
         <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
@@ -11,6 +31,26 @@
         <link href="https://fonts.cdnfonts.com/css/homizio" rel="stylesheet">
         <link href='https://fonts.googleapis.com/css?family=Open Sans' rel='stylesheet'>
         <link rel="icon" href="/assets/icons/favicon.ico" type="image/x-icon" />
+        
+        <!-- JSON-LD Structured Data -->
+        <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "BlogPosting",
+            
+            "headline": "Usando a API da Riot Games",
+            "description": "Explorando a API da Riot Games para coletar dados de League of Legends e criar cartas memoráveis de partidas. Uso de Node.js, Express e Axios para consumo de dados.",
+            "image": "https://martinsevandro.github.io/assets/imgs/kuri_Sup.png",
+            "datePublished": "2025-05-27",
+            "author": {
+                "@type": "Person",
+                "name": "Evandro Martins",
+                "url": "https://martinsevandro.github.io"
+            },
+            "keywords": "Node.js, Express, Axios, API, Render"
+            
+        }
+        </script>
         
     </head>
 
@@ -80,8 +120,8 @@
 <p>Alguns dos dados que achei interessante foram: KDA, Tempo de Partida, Data da Partida, Farm de Minions, %Participação de Abates, Dano Causado, Ouro Recebido. E, juntando os ids de campeão jogado, itens e runas obtidos na API, foi possível mostrar as imagens deles, criando um Card bem interessante, semelhante aos de Pokemon tcg (sem tantos detalhes também...), mas que devido a combinação dos elementos visuais, assinatura do nick e a cor da carta de acordo com eventuais conquistas, já ficou melhor do que eu esperava.</p>
 <h3><strong>Yu-Gi-LoL?</strong></h3>
 <p>Na Figura abaixo há alguns exemplos dos Cards gerados. Determinados status modificam a escolha tanto da skin, quanto a cor da borda, sendo elas dependentes dos dados do KDA, por exemplo, e dependendo da função do jogador, estatísticas diferentes são mostradas na carta (Como Suporte e Atirador). Coloquei um efeito de &quot;flip&quot; e &quot;tilt&quot; (inclinação quando passar o cursor sobre a carta).</p>
-<p><img src="/assets/imgs/kuri_Sup.png" alt="Cards_Examples">
-<img src="/assets/imgs/route_Adc.png" alt="Cards_Examples"></p>
+<p><img src="/assets/imgs/kuri_Sup.png" alt="Exemplos de cartas de jogadores geradas pela API da Riot Games mostrando dados de KDA com diferentes skins e funções">
+<img src="/assets/imgs/route_Adc.png" alt="Exemplo de carta de atirador ADC gerada com dados da partida destacando estatísticas e performance do jogador"></p>
 <p>Atrelado a combinação de fatores como KDA, se houve uma partida perfeita (com 0 mortes), se obteve todos os dragões e barões da partida, etc. existem os achievements, que são ícones especiais que aparecem apenas quando são conquistados. E a skin do campeão na carta também é influenciado pela estatística, ou seja, skins mais bonitas (geralmente as mais recentes lançada$) tem uma %chance de aparecer apenas quando o jogador obter bons resultados.</p>
 <h3>Tecnologias principais</h3>
 <ol>
