@@ -16,10 +16,11 @@
         <meta property="og:description" content="{{ description or 'Portfólio e Blog técnico de Evandro Martins' }}" />
         <meta property="og:url" content="https://martinsevandro.github.io{{ page.url }}" />
         <meta property="og:type" content="{% if pageType == 'post' %}article{% elif pageType == 'curriculum' %}profile{% else %}website{% endif %}" />
-        <meta property="og:image" content="https://martinsevandro.github.io{{ image or '/assets/imgs/perfil-ef.png' }}" />
+        <meta property="og:image" content="https://martinsevandro.github.io{{ image or '/assets/imgs/perfil-ef-256.webp' }}" />
         <meta property="og:locale" content="pt_BR" />
         
-        
+
+        <link rel="preload" as="image" href="/assets/imgs/perfil-ef-256.webp">
         <link rel="stylesheet" href="/assets/styles.css" />
         <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
@@ -36,7 +37,7 @@
             {% if pageType == 'post' %}
             "headline": "{{ title }}",
             "description": "{{ description or 'Post técnico' }}",
-            "image": "https://martinsevandro.github.io{{ image or '/assets/imgs/perfil-ef.png' }}",
+            "image": "https://martinsevandro.github.io{{ image or '/assets/imgs/perfil-ef-256.webp' }}",
             "datePublished": "{{ date | date('yyyy-MM-dd') }}",
             "author": {
                 "@type": "Person",
@@ -47,7 +48,7 @@
             {% else %}
             "name": "{{ title }}",
             "url": "https://martinsevandro.github.io",
-            "image": "https://martinsevandro.github.io/assets/imgs/perfil-ef.png",
+            "image": "https://martinsevandro.github.io/assets/imgs/perfil-ef-256.webp",
             "description": "{{ description or 'Desenvolvedor Full Stack - TypeScript, Angular, Node.js, NestJS, MongoDB, Data Engineering' }}",
             "sameAs": [
                 "https://github.com/martinsevandro",
