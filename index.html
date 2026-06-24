@@ -76,7 +76,7 @@
 
     <a href="/resume" class="perfil-resume">RESUME</a>
 
-    <span class="perfil-footer">© 2025</span>
+    <span class="perfil-footer">© 2026</span>
     
 </div>
 
@@ -90,103 +90,111 @@
   <ul>
     
       <li class="post-item">
-        <div class="post-title">
-          <a href="/posts/fourth-post/">Frontend do Carta Alta!</a>
-        </div>
-
-        <div class="post-details">
-          <div class="post-date">          
-            <small>30/07/2025</small>
+        <a class="post-link" href="/posts/fourth-post/">
+          <div class="post-title">
+            Frontend do Carta Alta!
           </div>
 
-          <div class="post-tags">
-            
-              <span class="tag">TypeScript</span>
-            
-              <span class="tag">Angular</span>
-            
-              <span class="tag">WebSocket</span>
-            
-          </div> 
-        </div>
+          <div class="post-details">
+            <div class="post-date">          
+              <small>30/07/2025</small>
+            </div>
+
+            <div class="post-tags">
+              
+                <span class="tag">TypeScript</span>
+              
+                <span class="tag">Angular</span>
+              
+                <span class="tag">WebSocket</span>
+              
+            </div> 
+          </div>
+        </a>
       </li>
     
       <li class="post-item">
-        <div class="post-title">
-          <a href="/posts/third-post/">Backend do Carta Alta!</a>
-        </div>
-
-        <div class="post-details">
-          <div class="post-date">          
-            <small>12/07/2025</small>
+        <a class="post-link" href="/posts/third-post/">
+          <div class="post-title">
+            Backend do Carta Alta!
           </div>
 
-          <div class="post-tags">
-            
-              <span class="tag">TypeScript</span>
-            
-              <span class="tag">NestJS</span>
-            
-              <span class="tag">MongoDB</span>
-            
-              <span class="tag">API</span>
-            
-          </div> 
-        </div>
+          <div class="post-details">
+            <div class="post-date">          
+              <small>12/07/2025</small>
+            </div>
+
+            <div class="post-tags">
+              
+                <span class="tag">TypeScript</span>
+              
+                <span class="tag">NestJS</span>
+              
+                <span class="tag">MongoDB</span>
+              
+                <span class="tag">API</span>
+              
+            </div> 
+          </div>
+        </a>
       </li>
     
       <li class="post-item">
-        <div class="post-title">
-          <a href="/posts/second-post/">Usando a API da Riot Games</a>
-        </div>
-
-        <div class="post-details">
-          <div class="post-date">          
-            <small>27/05/2025</small>
+        <a class="post-link" href="/posts/second-post/">
+          <div class="post-title">
+            Usando a API da Riot Games
           </div>
 
-          <div class="post-tags">
-            
-              <span class="tag">Node.js</span>
-            
-              <span class="tag">Express</span>
-            
-              <span class="tag">Axios</span>
-            
-              <span class="tag">API</span>
-            
-              <span class="tag">Render</span>
-            
-          </div> 
-        </div>
+          <div class="post-details">
+            <div class="post-date">          
+              <small>27/05/2025</small>
+            </div>
+
+            <div class="post-tags">
+              
+                <span class="tag">Node.js</span>
+              
+                <span class="tag">Express</span>
+              
+                <span class="tag">Axios</span>
+              
+                <span class="tag">API</span>
+              
+                <span class="tag">Render</span>
+              
+            </div> 
+          </div>
+        </a>
       </li>
     
       <li class="post-item">
-        <div class="post-title">
-          <a href="/posts/first-post/">Criando o portfólio e o primeiro post</a>
-        </div>
-
-        <div class="post-details">
-          <div class="post-date">          
-            <small>26/05/2025</small>
+        <a class="post-link" href="/posts/first-post/">
+          <div class="post-title">
+            Criando o portfólio e o primeiro post
           </div>
 
-          <div class="post-tags">
-            
-              <span class="tag">HTML</span>
-            
-              <span class="tag">CSS</span>
-            
-              <span class="tag">JS</span>
-            
-              <span class="tag">Eleventy</span>
-            
-              <span class="tag">Nunjucks</span>
-            
-              <span class="tag">CI/CD</span>
-            
-          </div> 
-        </div>
+          <div class="post-details">
+            <div class="post-date">          
+              <small>26/05/2025</small>
+            </div>
+
+            <div class="post-tags">
+              
+                <span class="tag">HTML</span>
+              
+                <span class="tag">CSS</span>
+              
+                <span class="tag">JS</span>
+              
+                <span class="tag">Eleventy</span>
+              
+                <span class="tag">Nunjucks</span>
+              
+                <span class="tag">CI/CD</span>
+              
+            </div> 
+          </div>
+        </a>
       </li>
     
   </ul>
@@ -210,10 +218,68 @@
                 
 
             </div>
-        </main>       
+        </main>
+
+        <button id="backToTop" class="back-to-top" aria-label="Voltar ao topo">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                <path d="M6 15L12 9L18 15"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"/>
+            </svg>
+        </button>       
 
         <footer>            
         </footer>
+
+        <script>
+            const backToTop = document.getElementById("backToTop");
+
+            const scrollTargets = [
+                window,
+                document.documentElement,
+                document.body,
+                document.querySelector(".container"),
+                document.querySelector(".posts"),
+                document.querySelector(".publication"),
+                document.querySelector(".resume")
+            ].filter(Boolean);
+
+            function getMaxScrollTop() {
+                return Math.max(
+                window.scrollY || 0,
+                document.documentElement.scrollTop || 0,
+                document.body.scrollTop || 0,
+                document.querySelector(".container")?.scrollTop || 0,
+                document.querySelector(".posts")?.scrollTop || 0,
+                document.querySelector(".publication")?.scrollTop || 0,
+                document.querySelector(".resume")?.scrollTop || 0
+                );
+            }
+
+            function toggleBackToTop() {
+                backToTop.classList.toggle("is-visible", getMaxScrollTop() > 150);
+            }
+
+            function scrollAllToTop() {
+                window.scrollTo({ top: 0, behavior: "smooth" });
+                document.documentElement.scrollTo?.({ top: 0, behavior: "smooth" });
+                document.body.scrollTo?.({ top: 0, behavior: "smooth" });
+
+                document.querySelector(".container")?.scrollTo({ top: 0, behavior: "smooth" });
+                document.querySelector(".posts")?.scrollTo({ top: 0, behavior: "smooth" });
+                document.querySelector(".publication")?.scrollTo({ top: 0, behavior: "smooth" });
+                document.querySelector(".resume")?.scrollTo({ top: 0, behavior: "smooth" });
+            }
+
+            scrollTargets.forEach((target) => {
+                target.addEventListener("scroll", toggleBackToTop, { passive: true });
+            });
+
+            backToTop.addEventListener("click", scrollAllToTop);
+            toggleBackToTop();
+        </script>
         <script src="https://cdn.jsdelivr.net/npm/prismjs/prism.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-javascript.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-python.min.js"></script>

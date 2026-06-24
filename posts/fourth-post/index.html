@@ -78,7 +78,7 @@
 
     <a href="/resume" class="perfil-resume">RESUME</a>
 
-    <span class="perfil-footer">© 2025</span>
+    <span class="perfil-footer">© 2026</span>
     
 </div>
 
@@ -106,10 +106,25 @@
         <h2>High Card LoL</h2>
 <p>O projeto começou como buscador de dados da API da Riot, que combinava as estatísticas do jogador de uma partida e elementos visuais em uma carta, para eternizar aquele momento do jogador. Isso é o <strong>LoL Card Match</strong>. Evoluí isso para o <strong>High Card LoL</strong>, que além de ter essa opção, agora contém um sistema simples de registro de contas de usuário, que quando logado, pode armazenar suas cartas no seu deck e usá-las em duelos contra outros jogadores.</p>
 <p>O modo de jogo é o &quot;carta alta&quot;, famoso jogo de baralho, onde ambos jogadores mostram 1 carta por rodada, e a carta de maior valor vence. Aqui, adaptei para ser utilizado o KDA, em um duelo de melhor de 3 rodadas.</p>
-<p><img src="/assets/imgs/Duelo.png" alt="Interface de duelo do jogo Carta Alta mostrando dois decks em confronto direto com cartas lado a lado comparando KDA"></p>
+<p><img
+  src="/assets/imgs/Duelo.webp"
+  alt="Interface de duelo do jogo Carta Alta mostrando dois decks em confronto direto com cartas lado a lado comparando KDA"
+  width="730"
+  height="855"
+  loading="eager"
+  fetchpriority="high"
+  decoding="async"
+/></p>
 <p>No frontend, o navbar é dinâmico devido ao data binding, que quando o usuário está logado, aparecem opções extras como &quot;Vincular Carta&quot;, &quot;Desvincular Carta&quot;, referentes a adicionar/remover a carta buscada no Deck. Usando Router para navegação entre páginas (/home, /deck, /duel, /login, /register), onde tem duas versões da página inicial: a pública (/), sem a opção de &quot;Vincular Carta&quot;, e a autenticada (/home), com a opção. Ja as rotas do Deck e Duelo usam Guards para bloquear usuários não autenticados.</p>
 <p>Abaixo tem a imagem da página de Deck numa resolução desktop:</p>
-<p><img src="/assets/imgs/Deck.png" alt="Página do deck no frontend do Carta Alta em resolução desktop exibindo navegação e visualização de cartas do usuário"></p>
+<p><img
+  src="/assets/imgs/Deck.webp"
+  alt="Página do deck no frontend do Carta Alta em resolução desktop exibindo navegação e visualização de cartas do usuário"
+  width="1071"
+  height="950"
+  loading="lazy" 
+  decoding="async"
+/></p>
 <h3>Angular</h3>
 <p>No projeto anterior, as cartas eram feitas via innerHTML e manipulação do DOM. Já neste, resolvi usar o Angular, para estudá-lo, juntamente do Typescript.</p>
 <h4>Etapas</h4>
@@ -159,7 +174,14 @@
 <h3>WebSocket</h3>
 <p>Definido no backend, os eventos de socket podem ser visualizadas pelo console de rede do navegador, onde na imagem abaixo, coloquei as etapas de um jogador que logou, entrou na fila de duelo, esperou por um outro usuário fazer o mesmo, jogou duas rodadas, ganhou o duelo e entrou novamente na fila para jogar novamente.</p>
 <p>Durante o duelo, o WS exige autenticação, usando JWT, seguindo a regra explicada no post do backend, a respeito dos refresh, disconnect, etc. O WS foi usado pra permitir o duelo em tempo real, caso tivesse um chat na partida, também poderia ser realizado graças a ele.</p>
-<p><img src="/assets/imgs/RedeWebSocketRespostas.png" alt="Diagrama de comunicação WebSocket mostrando sequência de eventos de um duelo: login, fila, seleção de cartas e vitória"></p>
+<p><img
+  src="/assets/imgs/RedeWebSocketRespostas.webp"
+  alt="Diagrama de comunicação WebSocket mostrando sequência de eventos de um duelo: login, fila, seleção de cartas e vitória"
+  width="576"
+  height="796"
+  loading="lazy" 
+  decoding="async"
+/></p>
 <h3>Health</h3>
 <p>Aqui é a parte da ignição do site, por parte do frontend, pois no post do backend foi citado que o Render, nessa versão 0800, hiberna o servidor quando não é usado. Então, para melhorar a experiência de usuário, adicionei uma tela de loading quando o usuário acessa o site, onde é feito um pingpong entre a Vercel e o Render. Uma requisição é enviada para o Render, e a resposta que o servidor foi ligado é enviada de volta, quando isso acontece, o usuário pode acessar e usufruir normalmente. Abaixo tem um trecho de código dessa parte, agora na visão do Angular, já que a parte do backend está no post anterior.</p>
 <pre><code class="language-js">export class HealthService {
@@ -236,10 +258,68 @@ E aqui o <a href="https://github.com/martinsevandro/high-card-front"><strong>rep
 
 
             </div>
-        </main>       
+        </main>
+
+        <button id="backToTop" class="back-to-top" aria-label="Voltar ao topo">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                <path d="M6 15L12 9L18 15"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"/>
+            </svg>
+        </button>       
 
         <footer>            
         </footer>
+
+        <script>
+            const backToTop = document.getElementById("backToTop");
+
+            const scrollTargets = [
+                window,
+                document.documentElement,
+                document.body,
+                document.querySelector(".container"),
+                document.querySelector(".posts"),
+                document.querySelector(".publication"),
+                document.querySelector(".resume")
+            ].filter(Boolean);
+
+            function getMaxScrollTop() {
+                return Math.max(
+                window.scrollY || 0,
+                document.documentElement.scrollTop || 0,
+                document.body.scrollTop || 0,
+                document.querySelector(".container")?.scrollTop || 0,
+                document.querySelector(".posts")?.scrollTop || 0,
+                document.querySelector(".publication")?.scrollTop || 0,
+                document.querySelector(".resume")?.scrollTop || 0
+                );
+            }
+
+            function toggleBackToTop() {
+                backToTop.classList.toggle("is-visible", getMaxScrollTop() > 150);
+            }
+
+            function scrollAllToTop() {
+                window.scrollTo({ top: 0, behavior: "smooth" });
+                document.documentElement.scrollTo?.({ top: 0, behavior: "smooth" });
+                document.body.scrollTo?.({ top: 0, behavior: "smooth" });
+
+                document.querySelector(".container")?.scrollTo({ top: 0, behavior: "smooth" });
+                document.querySelector(".posts")?.scrollTo({ top: 0, behavior: "smooth" });
+                document.querySelector(".publication")?.scrollTo({ top: 0, behavior: "smooth" });
+                document.querySelector(".resume")?.scrollTo({ top: 0, behavior: "smooth" });
+            }
+
+            scrollTargets.forEach((target) => {
+                target.addEventListener("scroll", toggleBackToTop, { passive: true });
+            });
+
+            backToTop.addEventListener("click", scrollAllToTop);
+            toggleBackToTop();
+        </script>
         <script src="https://cdn.jsdelivr.net/npm/prismjs/prism.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-javascript.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/prismjs/components/prism-python.min.js"></script>
