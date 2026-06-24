@@ -15,13 +15,28 @@ O projeto começou como buscador de dados da API da Riot, que combinava as estat
 
 O modo de jogo é o "carta alta", famoso jogo de baralho, onde ambos jogadores mostram 1 carta por rodada, e a carta de maior valor vence. Aqui, adaptei para ser utilizado o KDA, em um duelo de melhor de 3 rodadas. 
 
-![Interface de duelo do jogo Carta Alta mostrando dois decks em confronto direto com cartas lado a lado comparando KDA](/assets/imgs/Duelo.png)
+<img
+  src="/assets/imgs/Duelo.webp"
+  alt="Interface de duelo do jogo Carta Alta mostrando dois decks em confronto direto com cartas lado a lado comparando KDA"
+  width="730"
+  height="855"
+  loading="eager"
+  fetchpriority="high"
+  decoding="async"
+/>
 
 No frontend, o navbar é dinâmico devido ao data binding, que quando o usuário está logado, aparecem opções extras como "Vincular Carta", "Desvincular Carta", referentes a adicionar/remover a carta buscada no Deck. Usando Router para navegação entre páginas (/home, /deck, /duel, /login, /register), onde tem duas versões da página inicial: a pública (/), sem a opção de "Vincular Carta", e a autenticada (/home), com a opção. Ja as rotas do Deck e Duelo usam Guards para bloquear usuários não autenticados.
 
 Abaixo tem a imagem da página de Deck numa resolução desktop:
 
-![Página do deck no frontend do Carta Alta em resolução desktop exibindo navegação e visualização de cartas do usuário](/assets/imgs/Deck.png) 
+<img
+  src="/assets/imgs/Deck.webp"
+  alt="Página do deck no frontend do Carta Alta em resolução desktop exibindo navegação e visualização de cartas do usuário"
+  width="1071"
+  height="950"
+  loading="lazy" 
+  decoding="async"
+/>
 
 
 ### Angular
@@ -93,8 +108,14 @@ Definido no backend, os eventos de socket podem ser visualizadas pelo console de
 
 Durante o duelo, o WS exige autenticação, usando JWT, seguindo a regra explicada no post do backend, a respeito dos refresh, disconnect, etc. O WS foi usado pra permitir o duelo em tempo real, caso tivesse um chat na partida, também poderia ser realizado graças a ele. 
 
-![Diagrama de comunicação WebSocket mostrando sequência de eventos de um duelo: login, fila, seleção de cartas e vitória](/assets/imgs/RedeWebSocketRespostas.png) 
-
+<img
+  src="/assets/imgs/RedeWebSocketRespostas.webp"
+  alt="Diagrama de comunicação WebSocket mostrando sequência de eventos de um duelo: login, fila, seleção de cartas e vitória"
+  width="576"
+  height="796"
+  loading="lazy" 
+  decoding="async"
+/>
 
 ### Health
 Aqui é a parte da ignição do site, por parte do frontend, pois no post do backend foi citado que o Render, nessa versão 0800, hiberna o servidor quando não é usado. Então, para melhorar a experiência de usuário, adicionei uma tela de loading quando o usuário acessa o site, onde é feito um pingpong entre a Vercel e o Render. Uma requisição é enviada para o Render, e a resposta que o servidor foi ligado é enviada de volta, quando isso acontece, o usuário pode acessar e usufruir normalmente. Abaixo tem um trecho de código dessa parte, agora na visão do Angular, já que a parte do backend está no post anterior.
