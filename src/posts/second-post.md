@@ -28,9 +28,26 @@ Alguns dos dados que achei interessante foram: KDA, Tempo de Partida, Data da Pa
 
 ### **Yu-Gi-LoL?**
 Na Figura abaixo há alguns exemplos dos Cards gerados. Determinados status modificam a escolha tanto da skin, quanto a cor da borda, sendo elas dependentes dos dados do KDA, por exemplo, e dependendo da função do jogador, estatísticas diferentes são mostradas na carta (Como Suporte e Atirador). Coloquei um efeito de "flip" e "tilt" (inclinação quando passar o cursor sobre a carta).
- 
-![Exemplos de cartas de jogadores geradas pela API da Riot Games mostrando dados de KDA com diferentes skins e funções](/assets/imgs/kuri_Sup.png) 
-![Exemplo de carta de atirador ADC gerada com dados da partida destacando estatísticas e performance do jogador](/assets/imgs/route_Adc.png) 
+
+<div class="image-row">
+    <img
+        src="/assets/imgs/kuri_Sup.webp"
+        alt="Exemplos de cartas de jogadores geradas pela API da Riot Games mostrando dados de KDA com diferentes skins e funções"
+        width="308"
+        height="560"
+        loading="eager"
+        fetchpriority="high"
+        decoding="async"
+    />
+    <img
+        src="/assets/imgs/route_Adc.webp"
+        alt="Página do deck no frontend do Carta Alta em resolução desktop exibindo navegação e visualização de cartas do usuário"
+        width="308"
+        height="560"
+        loading="lazy" 
+        decoding="async"
+    />
+</div>
 
 Atrelado a combinação de fatores como KDA, se houve uma partida perfeita (com 0 mortes), se obteve todos os dragões e barões da partida, etc. existem os achievements, que são ícones especiais que aparecem apenas quando são conquistados. E a skin do campeão na carta também é influenciado pela estatística, ou seja, skins mais bonitas (geralmente as mais recentes lançada$) tem uma %chance de aparecer apenas quando o jogador obter bons resultados. 
 
